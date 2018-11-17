@@ -1,4 +1,4 @@
-package com.example.perrystory.help4hire;
+package losdos.help4hire;
 
 import org.junit.Test;
 

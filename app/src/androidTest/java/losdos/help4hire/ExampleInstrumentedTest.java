@@ -1,4 +1,4 @@
-package com.example.perrystory.help4hire;
+package losdos.help4hire;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.perrystory.help4hire", appContext.getPackageName());
+        assertEquals("losdos.help4hire", appContext.getPackageName());
     }
 }
