@@ -1,5 +1,6 @@
 package losdos.help4hire;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,13 +12,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    FragmentManager fragmentManager = getFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //sets to home -- if login true
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame
+                        , new Search())
+                .commit();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //        getSupportActionBar().hide();
@@ -65,21 +74,28 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
+
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame
+                            , new Search())
+                    .commit();
         } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame
+                            , new ProfileActivity())
+                    .commit();
 
         } else if (id == R.id.nav_active_services) {
-            Intent intent = new Intent(this, ActiveServicesActivity.class);
-            startActivity(intent);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame
+                            , new ActiveServicesActivity())
+                    .commit();
 
         } else if (id == R.id.nav_signout) {
             // add sign out function here
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+
 
         }
 
