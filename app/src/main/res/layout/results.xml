@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:outlineProvider="bounds"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity">
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="402dp"
-        android:layout_height="75dp"
+        android:layout_width="400dp"
+        android:layout_height="70dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clipToPadding="false">
+        android:layout_marginTop="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/search"
             style="@android:style/Widget.Holo.Light.EditText"
-            android:layout_width="334dp"
-            android:layout_height="46dp"
+            android:layout_width="375dp"
+            android:layout_height="47dp"
             android:layout_gravity="center_horizontal"
+            android:autofillHints=""
             android:background="@drawable/search_bar"
             android:elevation="10dp"
             android:ems="10"
@@ -36,8 +38,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.39"
-            android:autofillHints="" />
+            app:layout_constraintVertical_bias="0.39" />
 
         <ImageButton
             android:id="@+id/search_go"
@@ -49,7 +50,6 @@
             android:adjustViewBounds="false"
             android:background="@android:color/transparent"
             android:elevation="11dp"
-            android:onClick="startSearch"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="@+id/search"
             app:layout_constraintEnd_toEndOf="@+id/search"
@@ -60,21 +60,22 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="395dp"
-        android:layout_height="603dp"
+        android:layout_width="396dp"
+        android:layout_height="496dp"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        android:clipToPadding="false">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="379dp"
-            android:layout_height="587dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/recycler_view_item" />
     </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

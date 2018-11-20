@@ -6,21 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:background="#fff"
+            android:elevation="10dp"
             android:endColor="@android:color/transparent"
-            android:theme="@style/AppTheme.NoActionBar"
-            app:popupTheme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme" />
 
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     </FrameLayout>
 
     <!--<include layout="@layout/content_main" />-->
