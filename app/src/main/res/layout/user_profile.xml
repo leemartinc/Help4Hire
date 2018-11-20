@@ -8,20 +8,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/profile_picture"
-        android:cropToPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/firstNameTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.83"
-        tools:srcCompat="@tools:sample/avatars[2]" />
-
     <EditText
         android:id="@+id/firstNameTextView"
         android:layout_width="wrap_content"
@@ -72,24 +58,26 @@
 
     <Button
         android:id="@+id/resetPswdButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="177dp"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:layout_width="179dp"
         android:layout_height="39dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/reset_password"
+        android:textColor="#52B2CF"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="0.786"
+        tools:background="#" />
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="155dp"
-        android:layout_height="33dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="170dp"
+        android:layout_height="36dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/save"
@@ -98,6 +86,20 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.874"
-        tools:background="#6886AD" />
+        app:layout_constraintVertical_bias="0.874" />
+
+    <ImageButton
+        android:id="@+id/profilePictureImageButton"
+        android:layout_width="158dp"
+        android:layout_height="148dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/profile_picture"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.188"
+        app:srcCompat="@drawable/default_user" />
 </android.support.constraint.ConstraintLayout>
