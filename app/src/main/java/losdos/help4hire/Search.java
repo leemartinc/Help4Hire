@@ -10,9 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class Search extends android.support.v4.app.Fragment {
 
@@ -39,6 +42,13 @@ public class Search extends android.support.v4.app.Fragment {
                     String query = queryArg.getText().toString();
                     if(query.length() == 0) {
 
+                        try  {
+                            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                        } catch (Exception e) {
+
+                        }
+
                         Toast.makeText(getActivity(), "Enter a service name.",
                                 Toast.LENGTH_SHORT).show();
 
@@ -49,11 +59,17 @@ public class Search extends android.support.v4.app.Fragment {
                         Results resultFrag = new Results();
                         resultFrag.setArguments(bundle);
 
+                        try  {
+                            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                        } catch (Exception e) {
+
+                        }
+
                         fm.beginTransaction().replace(R.id.content_frame
                                 , resultFrag).addToBackStack("Search")
                                 .commit();
                     }
-
                 }
             });
 

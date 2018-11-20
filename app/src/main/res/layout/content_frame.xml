@@ -15,12 +15,14 @@
             android:elevation="10dp"
             android:endColor="@android:color/transparent"
             android:theme="@style/AppTheme"
-            app:popupTheme="@style/AppTheme" />
+            app:popupTheme="@style/AppTheme"
+            android:onClick="hideKeyboard"/>
 
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClick="hideKeyboard">
     </FrameLayout>
 
     <!--<include layout="@layout/content_main" />-->

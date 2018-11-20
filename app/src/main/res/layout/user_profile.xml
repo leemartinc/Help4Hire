@@ -19,6 +19,4 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="HardcodedText" />
 
-
-
 </android.support.constraint.ConstraintLayout>

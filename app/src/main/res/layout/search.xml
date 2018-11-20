@@ -37,7 +37,6 @@
         android:adjustViewBounds="false"
         android:background="@android:color/transparent"
         android:elevation="11dp"
-        android:onClick="startSearch"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/searchQuery"
         app:layout_constraintEnd_toEndOf="@+id/searchQuery"
