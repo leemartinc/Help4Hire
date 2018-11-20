@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Search extends android.support.v4.app.Fragment {
 
@@ -21,23 +23,39 @@ public class Search extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         myView = inflater.inflate(R.layout.search, container, false);
+
+
         ImageButton submitSearch = myView.findViewById(R.id.search_go);
-
-
+        final TextView queryArg = myView.findViewById(R.id.searchQuery);
 
         final android.support.v4.app.FragmentManager fm = getFragmentManager();
 
-        submitSearch.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
 
-                    fm.beginTransaction().replace(R.id.content_frame
-                    , new Results())
-                    .commit();
 
-        }
-        });
+            submitSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                    String query = queryArg.getText().toString();
+                    if(query.length() == 0) {
+
+                        Toast.makeText(getActivity(), "Enter a service name.",
+                                Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        Bundle bundle = new Bundle();
+                        bundle.putString("toSearch", query);
+
+                        Results resultFrag = new Results();
+                        resultFrag.setArguments(bundle);
+
+                        fm.beginTransaction().replace(R.id.content_frame
+                                , resultFrag).addToBackStack("Search")
+                                .commit();
+                    }
+
+                }
+            });
 
         return myView;
 

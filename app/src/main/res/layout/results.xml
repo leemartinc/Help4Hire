@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/search"
+            android:id="@+id/resSearch"
             style="@android:style/Widget.Holo.Light.EditText"
             android:layout_width="375dp"
             android:layout_height="47dp"
@@ -51,9 +51,9 @@
             android:background="@android:color/transparent"
             android:elevation="11dp"
             android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="@+id/search"
-            app:layout_constraintEnd_toEndOf="@+id/search"
-            app:layout_constraintTop_toTopOf="@+id/search"
+            app:layout_constraintBottom_toBottomOf="@+id/resSearch"
+            app:layout_constraintEnd_toEndOf="@+id/resSearch"
+            app:layout_constraintTop_toTopOf="@+id/resSearch"
             app:srcCompat="@drawable/go_arrow" />
 
     </android.support.constraint.ConstraintLayout>
