@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:padding="8dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+  <android.support.constraint.ConstraintLayout
+      android:layout_width="367dp"
+      android:layout_height="125dp"
+      android:elevation="10dp"
+      android:background="@drawable/results_bg"
+      >
+
+    <TextView
+        android:id="@+id/resultItem3"
+        android:layout_width="63dp"
+        android:layout_height="19dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="item3" />
+
+    <TextView
+        android:id="@+id/resultItem4"
+        android:layout_width="65dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="9dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resultItem3"
+        tools:text="item4" />
+
+    <TextView
+        android:id="@+id/resultItem1"
+        android:layout_width="57dp"
+        android:layout_height="19dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="item1" />
+
+    <TextView
+        android:id="@+id/resultItem2"
+        android:layout_width="295dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resultItem1"
+        tools:text="item2 -- this is where a shhort description of the service being offered will go" />
+
+    <Button
+        android:id="@+id/resultButton"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginLeft="144dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginRight="135dp"
+        android:layout_marginBottom="4dp"
+        android:text="View Profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+  </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

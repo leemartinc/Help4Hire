@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipToPadding="false">
 
     <EditText
         android:id="@+id/search"
@@ -12,6 +13,7 @@
         android:layout_height="46dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/search_bar"
+        android:elevation="10dp"
         android:ems="10"
         android:hint="Search"
         android:inputType="textPersonName"
@@ -22,7 +24,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintVertical_bias="0.39"
+        android:autofillHints="" />
 
     <ImageButton
         android:id="@+id/search_go"
@@ -30,14 +33,16 @@
         android:layout_height="0dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
         android:layout_marginBottom="7dp"
-        android:adjustViewBounds="true"
+        android:adjustViewBounds="false"
         android:background="@android:color/transparent"
+        android:elevation="11dp"
+        android:onClick="startSearch"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/search"
         app:layout_constraintEnd_toEndOf="@+id/search"
         app:layout_constraintTop_toTopOf="@+id/search"
         app:srcCompat="@drawable/go_arrow" />
+
 
 </android.support.constraint.ConstraintLayout>
