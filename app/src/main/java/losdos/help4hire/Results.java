@@ -1,11 +1,13 @@
 package losdos.help4hire;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -42,6 +44,7 @@ public class Results extends Fragment {
     private ResultsAdapter adapter;
 
 
+    @SuppressLint("ResourceType")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class Results extends Fragment {
 
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Query q = reference.orderBy("service est hours", Query.Direction.ASCENDING);
 
@@ -79,9 +82,11 @@ public class Results extends Fragment {
         adapter = new ResultsAdapter(options);
 
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         recyclerView.setMinimumHeight(800);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(adapter);
 
 
 
