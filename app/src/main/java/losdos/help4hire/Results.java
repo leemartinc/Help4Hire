@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,8 +38,9 @@ public class Results extends Fragment {
     private CollectionReference reference = firestore.collection("services");
     private ResultsAdapter adapter;
     Query q;
-    private TextView tester;
-    private Button search;
+    private ImageButton search;
+    RecyclerView recyclerView;
+    EditText queryArgs;
 
 
     @SuppressLint("ResourceType")
@@ -50,9 +52,8 @@ public class Results extends Fragment {
         myView = inflater.inflate(R.layout.results, container, false);
 
         //showAdapter(q);
-        tester = myView.findViewById(R.id.debugger);
 
-        final EditText queryArgs = myView.findViewById(R.id.resSearch);
+        queryArgs  = myView.findViewById(R.id.resSearch);
 
         Bundle bundle = getArguments();
         String query = bundle.getString("toSearch");
@@ -61,15 +62,14 @@ public class Results extends Fragment {
 
         //adapter.startListening();
 
-        final RecyclerView recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_view);
 
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        q = reference.orderBy("serviceName", Query.Direction.ASCENDING)
-                .whereEqualTo(queryArgs.getText().toString(), true);
+        q = reference.orderBy("serviceName").startAt(query).endAt(query + "\uf8ff");
 
         FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
                 .setQuery(q, preResults.class)
@@ -77,9 +77,6 @@ public class Results extends Fragment {
 
         adapter = new ResultsAdapter(options);
 
-        recyclerView.setMinimumHeight(800);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
 
         if(queryArgs.getText().toString().length() != 0) {
@@ -101,6 +98,8 @@ public class Results extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = queryArgs.getText().toString();
+
                 if (s.toString().length() == 0) {
                     q = firestore.collection("services");
                     //showAdapter(q);
@@ -108,26 +107,42 @@ public class Results extends Fragment {
                             .setQuery(q, preResults.class)
                             .build();
 
-                    tester.setText(s);
                     adapter = new ResultsAdapter(options);
                     recyclerView.setAdapter(adapter);
 
 
                 } // This is used as if user erases the characters in the search field.
                 else {
-                    q = reference.orderBy("serviceName").startAt(s.toString().trim()).endAt(s.toString().trim() + "\uf8ff");
+
+                    recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_view);
+
+                    recyclerView.setHasFixedSize(true);
+
+                    q = reference.orderBy("serviceName").startAt(query).endAt(query + "\uf8ff");
                     //showAdapter(q);
                     FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
                             .setQuery(q, preResults.class)
                             .build();
 
-                    tester.setText(s.toString());
-
                     adapter = new ResultsAdapter(options);
+
                     recyclerView.setAdapter(adapter);
 
                 }
-                adapter.notifyDataSetChanged();
+
+                if(queryArgs.getText().toString().length() != 0) {
+                    adapter.startListening();
+                    /*debug
+                    Toast.makeText(getActivity(), "im listening",
+                            Toast.LENGTH_SHORT).show();
+                            */
+                }else{
+                    //adapter.stopListening();
+                    /*
+                    Toast.makeText(getActivity(), "im not listening",
+                            Toast.LENGTH_SHORT).show();
+                            */
+                }
             }
 
 
@@ -137,7 +152,7 @@ public class Results extends Fragment {
             }
         });
 
-        search = myView.findViewById(R.id.resGoSearch);
+        search = myView.findViewById(R.id.search_go);
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,8 +172,30 @@ public class Results extends Fragment {
                             Toast.LENGTH_SHORT).show();
 
                 }else{
+                    recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_view);
+
+                    recyclerView.setHasFixedSize(true);
 
 
+                    q = reference.orderBy("serviceName").startAt(query).endAt(query + "\uf8ff");
+
+                    FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
+                            .setQuery(q, preResults.class)
+                            .build();
+
+                    adapter = new ResultsAdapter(options);
+
+                    recyclerView.setAdapter(adapter);
+
+                    if(queryArgs.getText().toString().length() != 0) {
+                        adapter.startListening();
+                        Toast.makeText(getActivity(), "im listening",
+                                Toast.LENGTH_SHORT).show();
+                    }else{
+                        //adapter.stopListening();
+                        Toast.makeText(getActivity(), "im not listening",
+                                Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }
