@@ -1,36 +1,24 @@
 package losdos.help4hire;
 
 public class preResults {
-    private String serviceName;
-    private String providerLoc;
-    private int providerRating;
-    private int abbrevCost;
+    private String serviceProvider;
+    private String serviceRate;
 
     public preResults(){
         //empty constructor needed
     }
 
-    public preResults(String serviceName, String providerLoc, int providerRating, int abbrevCost){
-        this.abbrevCost = abbrevCost;
-        this.providerLoc = providerLoc;
-        this.serviceName = serviceName;
-        this.providerRating = providerRating;
+    public preResults(String serviceProvider, String serviceRate){
+        this.serviceRate = serviceRate;
+        this.serviceProvider = serviceProvider;
 
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public String getServiceProvider() {
+        return serviceProvider;
     }
 
-    public String getProviderLoc() {
-        return providerLoc;
-    }
-
-    public int getProviderRating() {
-        return providerRating;
-    }
-
-    public int getAbbrevCost() {
-        return abbrevCost;
+    public String getServiceRate() {
+        return serviceRate;
     }
 }

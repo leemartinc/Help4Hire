@@ -10,6 +10,12 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, ResultsAdapter.ResultHolder> {
 
@@ -19,13 +25,57 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ResultHolder holder, int position, @NonNull preResults model) {
-        Bundle bundle = new Bundle();
+    protected void onBindViewHolder(@NonNull final ResultHolder holder, int position, @NonNull preResults model) {
+        //Bundle bundle = new Bundle();
 
-        holder.textViewProviderName.setText(model.getServiceName());
+         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+         CollectionReference reference = firestore.collection("users");
+
+         reference.document(model.getServiceProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+             @Override
+             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                 if(task.isSuccessful()){
+                     DocumentSnapshot documentSnapshot = task.getResult();
+
+                     String firstName = documentSnapshot.getString("firstName");
+                     String lastName = documentSnapshot.getString("lastName");
+
+                     String fullName = firstName + " " + lastName;
+
+                     holder.textViewProviderName.setText(fullName);
+
+                     String zip = documentSnapshot.getString("zip");
+
+                     holder.textViewProviderLoc.setText(zip);
+
+                     int rating = documentSnapshot.getLong("rating").intValue();
+
+                     holder.textViewProviderRating.setText(String.valueOf(rating));
+
+                 }else{
+
+                 }
+
+             }
+         });
+
+
+
+
+
+        /*
+        //holder.textViewProviderName.setText(model.getServiceName());
         holder.textViewProviderLoc.setText(model.getProviderLoc());
         holder.textViewProviderRating.setText(String.valueOf(model.getProviderRating()));
-        holder.textViewAbbrevCost.setText(String.valueOf(model.getAbbrevCost()));
+        */
+
+
+
+        holder.textViewAbbrevCost.setText(String.valueOf(model.getServiceRate()));
+
+
+
 
     }
 
