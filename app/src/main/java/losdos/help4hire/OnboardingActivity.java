@@ -70,8 +70,9 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
 
             //to sign up screen signUp
 
-            //startActivity(new Intent(OnboardingActivity.this,ProfileActivity.class));
-            //finish();
+            startActivity(new Intent(OnboardingActivity.this,PreSignUp.class));
+            finish();
+
         }
 
         else if (view.getId() == R.id.loginButton){
