@@ -77,11 +77,16 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
 
         else if (view.getId() == R.id.loginButton){
 
-            loginUser(input_email.getText().toString(),input_password.getText().toString());
+            if(input_email.length() == 0 || input_password.length() == 0){
+                Snackbar snackbar = Snackbar.make(activity_onboard, "Enter your Email and Password",Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            }else {
+                loginUser(input_email.getText().toString(), input_password.getText().toString());
+            }
         }
     }
 
-    private void loginUser(String email,final String password) {
+    private void loginUser(final String email, final String password) {
         auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -92,7 +97,6 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
                             Snackbar snackbar = Snackbar.make(activity_onboard, "Login Failed. Try again",Snackbar.LENGTH_SHORT);
                             snackbar.show();
                         }
-
                         else {
                             startActivity(new Intent(OnboardingActivity.this,MainActivity.class));
                         }
