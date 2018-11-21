@@ -1,5 +1,6 @@
 package losdos.help4hire;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +45,8 @@ public class Results extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         myView = inflater.inflate(R.layout.results, container, false);
 
         //showAdapter(q);
@@ -77,8 +80,9 @@ public class Results extends Fragment {
 
 
         recyclerView.setAdapter(adapter);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.smoothScrollToPosition(0);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setMinimumHeight(800);
+
 
 
         if(query.length() == 0) {
