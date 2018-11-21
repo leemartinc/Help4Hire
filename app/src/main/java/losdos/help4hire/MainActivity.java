@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -128,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_signout) {
             // add sign out function here
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this,OnboardingActivity.class));
 
         }
 

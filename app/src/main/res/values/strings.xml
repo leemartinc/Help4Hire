@@ -14,7 +14,7 @@
     <string name="app_logo">app logo</string>
     <string name="login">Login</string>
     <string name="signup">SignUp</string>
-    <string name="username">username</string>
+    <string name="email">Email</string>
     <string name="password">password</string>
     <string name="forgot_username_or_password">forgot username or password</string>
     <string name="user">User</string>
