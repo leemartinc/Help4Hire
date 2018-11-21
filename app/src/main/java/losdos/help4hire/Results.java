@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,9 +35,9 @@ public class Results extends Fragment {
     ListView mList;
 
 
-    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-    CollectionReference reference = firestore.collection("Users");
-    Query q;
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private CollectionReference reference = firestore.collection("services");
+    private ResultsAdapter adapter;
 
 
     @Nullable
@@ -41,7 +45,6 @@ public class Results extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.results, container, false);
 
-        q = firestore.collection("Users");
         //showAdapter(q);
 
         final EditText queryArgs = myView.findViewById(R.id.resSearch);
@@ -49,59 +52,63 @@ public class Results extends Fragment {
         Bundle bundle = getArguments();
         String query = bundle.getString("toSearch");
 
+
+
         //queryArgs.setText(query);
 
-        if(query.length() != 0) {
-            //go to firestore
 
+
+        //adapter.startListening();
+
+        RecyclerView recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_view);
+
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        Query q = reference.orderBy("service est hours", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
+                .setQuery(q, preResults.class)
+                .build();
+
+        adapter = new ResultsAdapter(options);
+
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+        if(query.length() == 0) {
+            adapter.startListening();
+        }else{
+            adapter.stopListening();
         }
+        
 
-        queryArgs.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //go to firestore
-                if (s.toString().length() == 0) {
-                    q = firestore.collection("Users");
-                    //showAdapter(q);
-                } // This is used as if user erases the characters in the search field.
-                else {
-                    q = reference.orderBy("name").startAt(s.toString().trim()).endAt(s.toString().trim() + "\uf8ff"); // name - the field for which you want to make search
-                    ///showAdapter(q);
-                }
-                //adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-/*
-        void showAdapter(Query q1) {
-            q1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    List<SearchModel> names = new ArrayList<>();
-                    if(task.isSuccessful()){
-                        for(QueryDocumentSnapshot document : task.getResult()) {
-                            SearchModel model = document.toObject(SearchModel.class);
-                            names.add(model);
-                        }
-                        mList = findViewById(R.id.listSearch);
-                        adapter = new SearchAdapter(AllPlaces.this, names);
-                        mList.setAdapter(adapter);
-                    }
-                }
-            });
-        }
-        */
 
         return myView;
     }
+
+
+/*
+    @Override
+    public void onCreate(){
+        super.onStart();
+        adapter.startListening();
+    }
+*/
+    /*
+    @Override
+    public void onStop(){
+        super.onStart();
+        adapter.stopListening();
+    }
+    */
+
+
+
 
 }

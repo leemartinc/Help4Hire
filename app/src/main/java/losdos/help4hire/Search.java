@@ -35,7 +35,7 @@ public class Search extends android.support.v4.app.Fragment {
                 public void onClick(View view) {
 
                     String query = queryArg.getText().toString();
-                    if(query.length() == 0) {
+                    if(query.length() != 0) {
 
                         try  {
                             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);

@@ -22,10 +22,10 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     protected void onBindViewHolder(@NonNull ResultHolder holder, int position, @NonNull preResults model) {
         Bundle bundle = new Bundle();
 
-        holder.textViewProviderName.setText(model.getProviderName());
+        holder.textViewProviderName.setText(model.getServiceName());
         holder.textViewProviderLoc.setText(model.getProviderLoc());
-        holder.textViewProviderRating.setText(model.getProviderRating());
-        holder.textViewAbbrevCost.setText(model.getAbbrevCost());
+        holder.textViewProviderRating.setText(String.valueOf(model.getProviderRating()));
+        holder.textViewAbbrevCost.setText(String.valueOf(model.getAbbrevCost()));
 
     }
 
