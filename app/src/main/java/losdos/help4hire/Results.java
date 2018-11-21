@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,13 +77,18 @@ public class Results extends Fragment {
 
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.smoothScrollToPosition(0);
 
 
         if(query.length() == 0) {
             adapter.startListening();
+            Toast.makeText(getActivity(), "im listening",
+                    Toast.LENGTH_SHORT).show();
         }else{
             adapter.stopListening();
+            Toast.makeText(getActivity(), "im not listening",
+                    Toast.LENGTH_SHORT).show();
         }
         
 
