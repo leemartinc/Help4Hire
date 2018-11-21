@@ -1,9 +1,7 @@
 package losdos.help4hire;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,26 +10,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class Results extends Fragment {
 
@@ -42,6 +36,9 @@ public class Results extends Fragment {
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private CollectionReference reference = firestore.collection("services");
     private ResultsAdapter adapter;
+    Query q;
+    private TextView tester;
+    private Button search;
 
 
     @SuppressLint("ResourceType")
@@ -53,27 +50,26 @@ public class Results extends Fragment {
         myView = inflater.inflate(R.layout.results, container, false);
 
         //showAdapter(q);
+        tester = myView.findViewById(R.id.debugger);
 
         final EditText queryArgs = myView.findViewById(R.id.resSearch);
 
         Bundle bundle = getArguments();
         String query = bundle.getString("toSearch");
 
-
-
-        //queryArgs.setText(query);
-
-
+        queryArgs.setText(query);
 
         //adapter.startListening();
 
-        RecyclerView recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_view);
+        final RecyclerView recyclerView = (RecyclerView) myView.findViewById(R.id.recycler_view);
 
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        Query q = reference.orderBy("service est hours", Query.Direction.ASCENDING);
+
+        q = reference.orderBy("serviceName", Query.Direction.ASCENDING)
+                .whereEqualTo(queryArgs.getText().toString(), true);
 
         FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
                 .setQuery(q, preResults.class)
@@ -81,32 +77,126 @@ public class Results extends Fragment {
 
         adapter = new ResultsAdapter(options);
 
-
-
         recyclerView.setMinimumHeight(800);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
 
-
-
-        if(query.length() == 0) {
+        if(queryArgs.getText().toString().length() != 0) {
             adapter.startListening();
             Toast.makeText(getActivity(), "im listening",
                     Toast.LENGTH_SHORT).show();
         }else{
-            adapter.stopListening();
+            //adapter.stopListening();
             Toast.makeText(getActivity(), "im not listening",
                     Toast.LENGTH_SHORT).show();
         }
-        
 
+
+        queryArgs.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length() == 0) {
+                    q = firestore.collection("services");
+                    //showAdapter(q);
+                    FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
+                            .setQuery(q, preResults.class)
+                            .build();
+
+                    tester.setText(s);
+                    adapter = new ResultsAdapter(options);
+                    recyclerView.setAdapter(adapter);
+
+
+                } // This is used as if user erases the characters in the search field.
+                else {
+                    q = reference.orderBy("serviceName").startAt(s.toString().trim()).endAt(s.toString().trim() + "\uf8ff");
+                    //showAdapter(q);
+                    FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
+                            .setQuery(q, preResults.class)
+                            .build();
+
+                    tester.setText(s.toString());
+
+                    adapter = new ResultsAdapter(options);
+                    recyclerView.setAdapter(adapter);
+
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        search = myView.findViewById(R.id.resGoSearch);
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String query = queryArgs.getText().toString();
+                if(query.length() == 0) {
+
+                    try  {
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                    } catch (Exception e) {
+
+                    }
+
+                    Toast.makeText(getActivity(), "Enter a service name.",
+                            Toast.LENGTH_SHORT).show();
+
+                }else{
+
+
+
+                }
+            }
+        });
 
 
 
         return myView;
     }
 
+    /*
+    void showAdapter(Query q1) {
+        q1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
+                        .setQuery(q, preResults.class)
+                        .build();
+
+
+
+                List<SearchModel> names = new ArrayList<>();
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()) {
+                        preResults model = document.toObject(preResults.class);
+                        names.add(model);
+                    }
+                    mList = findViewById(R.id.listSearch);
+                    adapter = new SearchAdapter(AllPlaces.this, names);
+                    mList.setAdapter(adapter);
+                }
+            }
+        });
+
+
+    }
+*/
 
 /*
     @Override
