@@ -1,12 +1,7 @@
 package losdos.help4hire;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

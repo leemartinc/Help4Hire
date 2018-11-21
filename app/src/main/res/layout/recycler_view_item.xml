@@ -47,7 +47,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resultItem1"
-        tools:text="item2 -- this is where a shhort description of the service being offered will go" />
+        tools:text="item2 -- this is where a the location / how far the person is from them will go" />
 
     <Button
         android:id="@+id/resultButton"
