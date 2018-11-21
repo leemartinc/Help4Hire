@@ -25,6 +25,14 @@ public class PreSignUp extends AppCompatActivity implements View.OnClickListener
 
             //startActivity(new Intent(PreSignUp.this,####.class));
             //finish();
+
+            userButton = findViewById(R.id.userButton);
+            userButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openUserSignUp();
+                }
+            });
         }
 
         else if (v.getId() == R.id.providerButton){
@@ -33,6 +41,13 @@ public class PreSignUp extends AppCompatActivity implements View.OnClickListener
 
             //startActivity(new Intent(PreSignUp.this,####.class));
             //finish();
+            providerButton = findViewById(R.id.providerButton);
+            providerButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openProviderSignUp();
+                }
+            });
 
         }
     }
@@ -41,5 +56,19 @@ public class PreSignUp extends AppCompatActivity implements View.OnClickListener
     public void onBackPressed() {
         startActivity(new Intent(PreSignUp.this,OnboardingActivity.class));
         finish();
+    }
+
+    /* This function will open up the Provider Activity which will go the
+        the provider sign up screen when the button is clicked
+
+    */
+    public void openProviderSignUp(){
+        Intent intent = new Intent(this, ProviderSignUp.class);
+        startActivity(intent);
+    }
+
+    public void openUserSignUp(){
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
     }
 }
