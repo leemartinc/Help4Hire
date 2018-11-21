@@ -1,11 +1,15 @@
 package losdos.help4hire;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Constraints;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -16,13 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public abstract class OnboardingActivity extends AppCompatActivity implements View.OnClickListener{
+public class OnboardingActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnLogin;
     EditText input_email,input_password;
     TextView btnSignup,btnForgotPass;
 
-    RelativeLayout activity_onboard;
+    ConstraintLayout activity_onboard;
 
     private FirebaseAuth auth;
 
@@ -38,7 +42,7 @@ public abstract class OnboardingActivity extends AppCompatActivity implements Vi
         input_password =  (EditText)findViewById(R.id.passwordEditText);
         btnSignup = (TextView)findViewById(R.id.signupButton);
         btnForgotPass = (TextView) findViewById(R.id.forgotButton);
-        activity_onboard = (RelativeLayout)findViewById(R.id.activity_onboarding);
+        activity_onboard = (ConstraintLayout)findViewById(R.id.activity_onboarding);
 
         btnSignup.setOnClickListener(this);
         btnForgotPass.setOnClickListener(this);
@@ -48,12 +52,8 @@ public abstract class OnboardingActivity extends AppCompatActivity implements Vi
         auth = FirebaseAuth.getInstance();
 
         //check already session , if ok -> Dashboard
-
         if (auth.getCurrentUser() != null)
-            startActivity(new Intent(OnboardingActivity.this,Search.class));
-
-
-
+            startActivity(new Intent(OnboardingActivity.this,MainActivity.class));
     }
 
     @Override
@@ -68,8 +68,10 @@ public abstract class OnboardingActivity extends AppCompatActivity implements Vi
 
         else if (view.getId() == R.id.signupButton){
 
-            startActivity(new Intent(OnboardingActivity.this,ProfileActivity.class));
-            finish();
+            //to sign up screen signUp
+
+            //startActivity(new Intent(OnboardingActivity.this,ProfileActivity.class));
+            //finish();
         }
 
         else if (view.getId() == R.id.loginButton){
@@ -86,18 +88,23 @@ public abstract class OnboardingActivity extends AppCompatActivity implements Vi
 
                         if(!task.isSuccessful())
                         {
-                            Snackbar snackbar = Snackbar.make(activity_onboard, "Password length must be over 6",Snackbar.LENGTH_SHORT);
+                            Snackbar snackbar = Snackbar.make(activity_onboard, "Login Failed. Try again",Snackbar.LENGTH_SHORT);
                             snackbar.show();
                         }
 
                         else {
-                            startActivity(new Intent(OnboardingActivity.this,Search.class));
+                            startActivity(new Intent(OnboardingActivity.this,MainActivity.class));
                         }
                     }
 
 
                 });
 
+    }
+
+    public void hideKeyboard(View view){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 
 
