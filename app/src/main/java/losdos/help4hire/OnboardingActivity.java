@@ -1,6 +1,8 @@
 package losdos.help4hire;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Constraints;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,13 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public abstract class OnboardingActivity extends AppCompatActivity implements View.OnClickListener{
+public class OnboardingActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnLogin;
     EditText input_email,input_password;
     TextView btnSignup,btnForgotPass;
 
-    RelativeLayout activity_onboard;
+    ConstraintLayout activity_onboard;
 
     private FirebaseAuth auth;
 
@@ -38,7 +40,7 @@ public abstract class OnboardingActivity extends AppCompatActivity implements Vi
         input_password =  (EditText)findViewById(R.id.passwordEditText);
         btnSignup = (TextView)findViewById(R.id.signupButton);
         btnForgotPass = (TextView) findViewById(R.id.forgotButton);
-        activity_onboard = (RelativeLayout)findViewById(R.id.activity_onboarding);
+        activity_onboard = (ConstraintLayout)findViewById(R.id.activity_onboarding);
 
         btnSignup.setOnClickListener(this);
         btnForgotPass.setOnClickListener(this);
