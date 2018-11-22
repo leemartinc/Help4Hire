@@ -15,5 +15,5 @@ public class ProviderSignUp extends AppCompatActivity {
         setContentView(R.layout.provider_signup);
 
 
-
+    }
 }

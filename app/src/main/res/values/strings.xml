@@ -26,4 +26,6 @@
     <string name="address">Address</string>
     <string name="reset_password">reset password</string>
     <string name="save">Save</string>
+    <string name="title_activity_provider_sign_up">ProviderSignUp</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
 </resources>
