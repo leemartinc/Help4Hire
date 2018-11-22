@@ -12,8 +12,9 @@ public class ProviderSignUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.provider_signup);
+        setContentView(R.layout.provier_signup);
 
 
-
+    }
 }
+
