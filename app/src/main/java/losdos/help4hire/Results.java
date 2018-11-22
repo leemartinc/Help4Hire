@@ -1,6 +1,8 @@
 package losdos.help4hire;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,11 +29,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
 
 public class Results extends Fragment {
 
     View myView;
     ListView mList;
+    SharedPreferences prefs;
+
 
 
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -57,6 +62,17 @@ public class Results extends Fragment {
 
         Bundle bundle = getArguments();
         String query = bundle.getString("toSearch");
+
+        //queryArgs.setText(query);
+
+
+
+        //check user role
+        prefs = getActivity().getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
+        String role = prefs.getString("role", "no role");
+
+
+
 
         queryArgs.setText(query);
 
