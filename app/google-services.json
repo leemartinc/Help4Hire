@@ -67,6 +67,14 @@
           }
         },
         {
+          "client_id": "146852261432-hnueste3lu354p4cvuthnadknoff02n3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "losdos.help4hire",
+            "certificate_hash": "a846b92a34839981f42da78d22800419ebdee8b7"
+          }
+        },
+        {
           "client_id": "146852261432-clb56rejssh0o340u69e5kon51dsthdr.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -54,13 +54,14 @@
             app:layout_constraintBottom_toBottomOf="@+id/resSearch"
             app:layout_constraintEnd_toEndOf="@+id/resSearch"
             app:layout_constraintTop_toTopOf="@+id/resSearch"
-            app:srcCompat="@drawable/go_arrow" />
+            app:srcCompat="@drawable/go_arrow"
+            android:contentDescription="TODO" />
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="396dp"
+        android:layout_width="match_parent"
         android:layout_height="496dp"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,8 +70,11 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <android.support.v7.widget.RecyclerView
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
