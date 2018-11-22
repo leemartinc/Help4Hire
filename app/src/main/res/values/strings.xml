@@ -28,4 +28,12 @@
     <string name="save">Save</string>
     <string name="title_activity_provider_sign_up">ProviderSignUp</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
+
+    <!--This Array Below is for the Spinner in the Provider Sign Up-->
+    <string-array name="provider_choices">
+        <item> Dog Walker</item>
+        <item> Maid</item>
+        <item> Baby Sitter</item>
+        <item> Car Washer</item>
+    </string-array>
 </resources>
