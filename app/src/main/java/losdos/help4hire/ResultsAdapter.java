@@ -28,37 +28,37 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     protected void onBindViewHolder(@NonNull final ResultHolder holder, int position, @NonNull preResults model) {
         //Bundle bundle = new Bundle();
 
-         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-         CollectionReference reference = firestore.collection("users");
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        CollectionReference reference = firestore.collection("users");
 
-         reference.document(model.getServiceProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-             @Override
-             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+        reference.document(model.getServiceProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                 if(task.isSuccessful()){
-                     DocumentSnapshot documentSnapshot = task.getResult();
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
 
-                     String firstName = documentSnapshot.getString("firstName");
-                     String lastName = documentSnapshot.getString("lastName");
+                    String firstName = documentSnapshot.getString("firstName");
+                    String lastName = documentSnapshot.getString("lastName");
 
-                     String fullName = firstName + " " + lastName;
+                    String fullName = firstName + " " + lastName;
 
-                     holder.textViewProviderName.setText(fullName);
+                    holder.textViewProviderName.setText(fullName);
 
-                     String zip = documentSnapshot.getString("zip");
+                    String zip = documentSnapshot.getString("zip");
 
-                     holder.textViewProviderLoc.setText(zip);
+                    holder.textViewProviderLoc.setText(zip);
 
-                     int rating = documentSnapshot.getLong("rating").intValue();
+                    int rating = documentSnapshot.getLong("rating").intValue();
 
-                     holder.textViewProviderRating.setText(String.valueOf(rating));
+                    holder.textViewProviderRating.setText(String.valueOf(rating));
 
-                 }else{
+                }else{
 
-                 }
+                }
 
-             }
-         });
+            }
+        });
 
 
 
