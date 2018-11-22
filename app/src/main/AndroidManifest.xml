@@ -15,7 +15,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".StartActivity"
             android:theme="@android:style/Theme.NoDisplay">
@@ -50,9 +50,14 @@
         <activity android:name=".ForgotPassword" />
         <activity android:name=".OnboardingActivity" />
         <activity android:name=".PreSignUp" />
-        <activity android:name=".ProviderSignUp" />
-        <activity android:name=".UserProfileActivity" />
-        <activity android:name=".ReviewActivity" />
+        <activity
+            android:name=".ProviderSignUp"
+            android:label="@string/title_activity_provider_sign_up"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:label="@string/title_activity_user_profile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
