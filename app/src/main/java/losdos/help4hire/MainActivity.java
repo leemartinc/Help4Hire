@@ -2,10 +2,13 @@ package losdos.help4hire;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,18 +17,31 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+    SharedPreferences prefs;
+    MenuItem provItem;
+    Menu nav_menu;
+    String role;
+    NavigationView navigationView;
+    ViewGroup vg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
+        role = prefs.getString("role", "no role");
+
         setContentView(R.layout.activity_main);
+
 
         //sets to home -- if login true
         fragmentManager.beginTransaction()
@@ -56,33 +72,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onDrawerSlide(@NonNull View view, float v) {
-
+                        showProviderItem();
                     }
 
                     @Override
                     public void onDrawerOpened(View drawerView) {
                        hideKeyboard(drawerView);
+                        showProviderItem();
                     }
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
                         hideKeyboard(drawerView);
+                        showProviderItem();
                     }
 
                     @Override
                     public void onDrawerStateChanged(int i) {
+                        showProviderItem();
 
                     }
-
 
                 });
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
-
-
 
 
     @Override
@@ -96,13 +113,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        showProviderItem();
+
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        showProviderItem();
+        return true;
+    }
 
+    private void showProviderItem()
+    {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu= navigationView.getMenu();
+
+            if(role.equals("provider")) {
+
+                nav_Menu.findItem(R.id.provider_options).setVisible(true);
+
+            }
+
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -131,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_signout) {
             // add sign out function here
             FirebaseAuth.getInstance().signOut();
+            prefs.edit().remove("role").apply();
             startActivity(new Intent(MainActivity.this,OnboardingActivity.class));
 
         }

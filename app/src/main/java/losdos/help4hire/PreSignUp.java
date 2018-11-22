@@ -15,6 +15,13 @@ public class PreSignUp extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pre_signup);
+
+        userButton = (Button)findViewById(R.id.userButton);
+        userButton.setOnClickListener(this);
+
+        providerButton = (Button)findViewById(R.id.providerButton);
+        providerButton.setOnClickListener(this);
+
     }
 
     @Override
@@ -23,31 +30,17 @@ public class PreSignUp extends AppCompatActivity implements View.OnClickListener
 
             //to user sign up screen signUp
 
-            //startActivity(new Intent(PreSignUp.this,####.class));
-            //finish();
+            startActivity(new Intent(PreSignUp.this,UserProfileActivity.class));
+            finish();
 
-            userButton = findViewById(R.id.userButton);
-            userButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openUserSignUp();
-                }
-            });
         }
 
         else if (v.getId() == R.id.providerButton){
 
             //to provider sign up screen signUp
 
-            //startActivity(new Intent(PreSignUp.this,####.class));
-            //finish();
-            providerButton = findViewById(R.id.providerButton);
-            providerButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    openProviderSignUp();
-                }
-            });
+            startActivity(new Intent(PreSignUp.this,ProviderSignUp.class));
+            finish();
 
         }
     }
@@ -58,17 +51,4 @@ public class PreSignUp extends AppCompatActivity implements View.OnClickListener
         finish();
     }
 
-    /* This function will open up the Provider Activity which will go the
-        the provider sign up screen when the button is clicked
-
-    */
-    public void openProviderSignUp(){
-        Intent intent = new Intent(this, ProviderSignUp.class);
-        startActivity(intent);
-    }
-
-    public void openUserSignUp(){
-        Intent intent = new Intent(this, UserProfileActivity.class);
-        startActivity(intent);
-    }
 }

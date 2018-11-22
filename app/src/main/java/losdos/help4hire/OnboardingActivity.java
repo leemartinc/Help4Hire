@@ -1,7 +1,11 @@
 package losdos.help4hire;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
 import android.support.design.widget.Snackbar;
@@ -14,19 +18,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class OnboardingActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnLogin;
     EditText input_email,input_password;
     TextView btnSignup,btnForgotPass;
-
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     ConstraintLayout activity_onboard;
+    String role;
 
     private FirebaseAuth auth;
 
@@ -98,6 +110,55 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
                             snackbar.show();
                         }
                         else {
+
+                            //check if user or provider
+
+                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String RegisteredUserID = currentUser.getUid();
+
+
+
+                            FirebaseFirestore firestore = FirebaseFirestore.getInstance().getInstance();
+                            CollectionReference reference = firestore.collection("users");
+
+
+                            reference.document(RegisteredUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                    //save user role
+                                    editor = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE).edit();
+
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+
+                                    String userType = documentSnapshot.getString("role");
+
+
+                                    switch (userType) {
+                                        case "provider":
+                                            //shared preferences
+                                            editor.putString("role", "provider");
+                                            editor.apply();
+
+                                            //Snackbar snackbar = Snackbar.make(activity_onboard, "role is user22",Snackbar.LENGTH_SHORT);
+                                            //snackbar.show();
+
+                                            break;
+                                        case "user":
+                                            //shared preferences
+                                            editor.putString("role", "user");
+                                            editor.apply();
+                                            break;
+                                        default:
+                                            //shared preferences
+                                            editor.putString("role", "no role found");
+                                            editor.apply();
+                                            break;
+                                    }
+
+                                }
+                            });
+
                             startActivity(new Intent(OnboardingActivity.this,MainActivity.class));
                         }
                     }
@@ -105,6 +166,11 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
 
                 });
 
+        //prefs = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
+        //String key = prefs.getString("role", "nani");
+
+        //Snackbar snackbar = Snackbar.make(activity_onboard, "" + key,Snackbar.LENGTH_SHORT);
+        //snackbar.show();
     }
 
     public void hideKeyboard(View view){
