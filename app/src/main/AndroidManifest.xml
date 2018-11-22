@@ -58,6 +58,10 @@
 
         <activity android:name=".PreSignUp"></activity>
 
+        <activity android:name=".ProviderSignUp"></activity>
+
+        <activity android:name=".UserProfileActivity"></activity>
+
 
     </application>
 
