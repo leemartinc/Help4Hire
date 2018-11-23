@@ -12,7 +12,7 @@
   <android.support.v7.widget.CardView
       android:id="@+id/activeService"
       android:layout_width="match_parent"
-      android:layout_height="135dp"
+      android:layout_height="175dp"
       android:elevation="50dp"
       android:padding="4dp"
       app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +80,7 @@
           android:layout_below="@+id/provider_name"
           android:layout_marginStart="4dp"
           android:layout_marginEnd="282dp"
-          android:layout_marginBottom="68dp"
+          android:layout_marginBottom="92dp"
           android:textSize="20sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -100,11 +100,11 @@
           android:background="#88e573"
           android:text="Message"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintStart_toStartOf="parent" />
 
       <Button
           android:id="@+id/btnLocation"
@@ -115,9 +115,9 @@
           android:background="#88e573"
           android:text="Location"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintEnd_toEndOf="parent" />
       <!-- END ACTIVE SERVICE -->
 
       <!-- PENDING SERVICE -->
@@ -132,11 +132,11 @@
           android:background="#88e573"
           android:text="Cancel"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintStart_toStartOf="parent" />
 
       <!-- END PENDING SERVICE -->
 
@@ -152,11 +152,11 @@
           android:background="#88e573"
           android:text="Review"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintStart_toStartOf="parent" />
 
       <Button
           android:id="@+id/btnHireAgain"
@@ -167,9 +167,9 @@
           android:background="#88e573"
           android:text="Hire Again"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintEnd_toEndOf="parent" />
 
       <!-- END CLOSED SERVICE -->
 

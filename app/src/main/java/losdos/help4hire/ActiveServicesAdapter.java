@@ -18,69 +18,25 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, ActiveServicesAdapter.ActiveServicesHolder> {
+public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveServices, ActiveServicesAdapter.ActiveServicesHolder> {
 
-    public ActiveServicesAdapter(@NonNull FirestoreRecyclerOptions<preResults> options) {
+    public ActiveServicesAdapter(@NonNull FirestoreRecyclerOptions<PreActiveServices> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final ActiveServicesHolder holder, int position, @NonNull preResults model) {
+    protected void onBindViewHolder(@NonNull final ActiveServicesHolder holder, int position, @NonNull PreActiveServices model) {
         //Bundle bundle = new Bundle();
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        CollectionReference reference = firestore.collection("requests");
+                    holder.textViewRequestProvider.setText(model.getRequestProvider());
 
-        reference.document(model.getServiceProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    holder.textViewRequestServiceTitle.setText(model.getRequestService());
 
-                if(task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
+                    holder.textViewRequestStatus.setText(model.getServiceStatus());
 
-                    String requestProvider = documentSnapshot.getString("requestProvider");
-                    String requestServiceTitle = documentSnapshot.getString("requestService");
-                    String requestStatus = documentSnapshot.getString("requestStatus");
-                    String totalCost = documentSnapshot.getString("totalCost");
-
-
-                    holder.textViewRequestProvider.setText(requestProvider);
-
-                    holder.textViewRequestServiceTitle.setText(requestServiceTitle);
-
-                    holder.textViewRequestStatus.setText(requestStatus);
-
-                    //int cost = documentSnapshot.getLong("total cost").intValue();
-
-                    holder.textViewTotalCost.setText(String.valueOf(totalCost));
+                    holder.textViewTotalCost.setText(model.getTotalCost());
 
                     //button Magic
-
-
-
-                }else{
-
-                }
-
-            }
-        });
-
-
-
-
-
-        /*
-        //holder.textViewProviderName.setText(model.getServiceName());
-        holder.textViewProviderLoc.setText(model.getProviderLoc());
-        holder.textViewProviderRating.setText(String.valueOf(model.getProviderRating()));
-        */
-
-
-
-//        holder.textViewAbbrevCost.setText(String.valueOf(model.getServiceRate()));
-
-
-
 
     }
 
@@ -88,7 +44,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, 
     @Override
     public ActiveServicesHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_view_item,
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.active_services_item,
                 viewGroup, false);
 
 
@@ -118,6 +74,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, 
             textViewRequestStatus = itemView.findViewById(R.id.provider_service_status);
             textViewTotalCost = itemView.findViewById(R.id.provider_service_cost);
 
+            /*
             messagesBtn = itemView.findViewById(R.id.btnMessage);
             locationBtn = itemView.findViewById(R.id.btnLocation);
 
@@ -125,6 +82,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, 
 
             reviewBtn = itemView.findViewById(R.id.btnReview);
             hireBtn = itemView.findViewById(R.id.btnHireAgain);
+            */
 
         }
     }

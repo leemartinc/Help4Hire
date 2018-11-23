@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -37,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
-        role = prefs.getString("role", "no role");
 
         setContentView(R.layout.activity_main);
 
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onDrawerOpened(View drawerView) {
-                       hideKeyboard(drawerView);
+                        hideKeyboard(drawerView);
                     }
 
                     @Override
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onDrawerStateChanged(int i) {
-                        showProviderItem();
                     }
 
                 });
@@ -95,6 +93,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                prefs = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
+                role = prefs.getString("role", "no role");
+
+                showProviderItem();
+            }
+        }, 1500);
     }
 
 
@@ -125,11 +134,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu= navigationView.getMenu();
 
-            if(role.equals("provider")) {
+        if(role.equals("provider")) {
 
-                nav_Menu.findItem(R.id.provider_options).setVisible(true);
+            nav_Menu.findItem(R.id.provider_options).setVisible(true);
 
-            }
+        }
 
     }
 
