@@ -7,121 +7,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity">
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/activeService"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="395dp"
+        android:layout_height="587dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="24dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-
-            <TextView
-                android:id="@+id/provider_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:text="Shane Walker"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/provider_service_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="4dp"
-                android:layout_toEndOf="@+id/provider_name"
-                android:text="Dog walker"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/provider_service_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="ACTIVE"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/provider_service_cost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/provider_name"
-                android:text="Cost: $46.19"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/btnMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/provider_service_cost"
-                android:layout_marginTop="10dp"
-                android:background="#88e573"
-                android:text="Message"
-                android:textColor="@android:color/white"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/provider_service_cost"
-                android:layout_marginTop="10dp"
-                android:background="#88e573"
-                android:text="Cancel"
-                android:textColor="@android:color/white"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/btnReview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/provider_service_cost"
-                android:layout_marginTop="10dp"
-                android:background="#88e573"
-                android:text="Review"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/btnLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/btnMessage"
-                android:layout_marginStart="13dp"
-                android:layout_toEndOf="@+id/btnMessage"
-                android:background="#88e573"
-                android:text="Location"
-                android:textColor="@android:color/white"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/btnHireAgain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/btnMessage"
-                android:layout_marginStart="13dp"
-                android:layout_toEndOf="@+id/btnMessage"
-                android:background="#88e573"
-                android:text="Hire Again"
-                android:textColor="@android:color/white" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-    </android.support.constraint.ConstraintLayout>
+        tools:listitem="@layout/active_servicies_item" />
 </android.support.constraint.ConstraintLayout>
