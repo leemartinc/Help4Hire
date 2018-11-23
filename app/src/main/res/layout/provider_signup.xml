@@ -8,7 +8,7 @@
 
 
     <RadioButton
-        android:id="@+id/radioButton4"
+        android:id="@+id/fixedRadioButton"
         android:layout_width="78dp"
         android:layout_height="22dp"
         android:layout_marginBottom="8dp"
@@ -17,7 +17,7 @@
         android:text="Fixed"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton3"
+        app:layout_constraintEnd_toStartOf="@+id/hourlyRadioButton"
         app:layout_constraintTop_toBottomOf="@+id/mySpinner"
         app:layout_constraintVertical_bias="0.076" />
 
@@ -71,6 +71,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="SAVE"
+        android:onClick="saveInfo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -106,7 +107,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton3"
+        app:layout_constraintTop_toBottomOf="@+id/hourlyRadioButton"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
@@ -121,14 +122,14 @@
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/insured"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton4"
+        app:layout_constraintEnd_toStartOf="@+id/fixedRadioButton"
         app:layout_constraintHorizontal_bias="0.621"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mySpinner"
         app:layout_constraintVertical_bias="0.189" />
 
     <RadioButton
-        android:id="@+id/radioButton3"
+        android:id="@+id/hourlyRadioButton"
         android:layout_width="81dp"
         android:layout_height="19dp"
         android:layout_marginBottom="8dp"

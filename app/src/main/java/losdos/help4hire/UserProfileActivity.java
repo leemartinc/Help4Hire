@@ -11,7 +11,7 @@ import android.view.View;
 /*
     This class is for the user profile activity. User enters fname, lname and
     address and saves it. This class will store all of that information into
-    firebase
+    firestore and use firebase for auth
 
  */
 
