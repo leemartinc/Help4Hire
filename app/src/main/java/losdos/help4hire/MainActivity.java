@@ -72,25 +72,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onDrawerSlide(@NonNull View view, float v) {
-                        showProviderItem();
                     }
 
                     @Override
                     public void onDrawerOpened(View drawerView) {
                        hideKeyboard(drawerView);
-                        showProviderItem();
                     }
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
                         hideKeyboard(drawerView);
-                        showProviderItem();
                     }
 
                     @Override
                     public void onDrawerStateChanged(int i) {
                         showProviderItem();
-
                     }
 
                 });
@@ -114,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        showProviderItem();
-
         return true;
     }
 
@@ -123,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        showProviderItem();
         return true;
     }
 

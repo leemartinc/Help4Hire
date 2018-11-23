@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -18,7 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, ActiveServicesAdapter.ActiveServicesHolder> {
-
 
     public ActiveServicesAdapter(@NonNull FirestoreRecyclerOptions<preResults> options) {
         super(options);
@@ -38,10 +38,10 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, 
                 if(task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
 
-                    String requestProvider = documentSnapshot.getString("request provider");
-                    String requestServiceTitle = documentSnapshot.getString("request service");
-                    String requestStatus = documentSnapshot.getString("request status");
-                    String totalCost = documentSnapshot.getString("total cost");
+                    String requestProvider = documentSnapshot.getString("requestProvider");
+                    String requestServiceTitle = documentSnapshot.getString("requestService");
+                    String requestStatus = documentSnapshot.getString("requestStatus");
+                    String totalCost = documentSnapshot.getString("totalCost");
 
 
                     holder.textViewRequestProvider.setText(requestProvider);
@@ -50,9 +50,13 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, 
 
                     holder.textViewRequestStatus.setText(requestStatus);
 
-                    int cost = documentSnapshot.getLong("total cost").intValue();
+                    //int cost = documentSnapshot.getLong("total cost").intValue();
 
-                    holder.textViewTotalCost.setText(String.valueOf(cost));
+                    holder.textViewTotalCost.setText(String.valueOf(totalCost));
+
+                    //button Magic
+
+
 
                 }else{
 
@@ -98,6 +102,14 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, 
         TextView textViewRequestStatus;
         TextView textViewTotalCost;
 
+        Button messagesBtn;
+        Button locationBtn;
+
+        Button cancelBtn;
+
+        Button reviewBtn;
+        Button hireBtn;
+
         public ActiveServicesHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -106,9 +118,13 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<preResults, 
             textViewRequestStatus = itemView.findViewById(R.id.provider_service_status);
             textViewTotalCost = itemView.findViewById(R.id.provider_service_cost);
 
+            messagesBtn = itemView.findViewById(R.id.btnMessage);
+            locationBtn = itemView.findViewById(R.id.btnLocation);
 
+            cancelBtn = itemView.findViewById(R.id.btnCancel);
 
-
+            reviewBtn = itemView.findViewById(R.id.btnReview);
+            hireBtn = itemView.findViewById(R.id.btnHireAgain);
 
         }
     }
