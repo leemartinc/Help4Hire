@@ -1,40 +1,44 @@
 package losdos.help4hire;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReviewActivity extends AppCompatActivity {
-
+public class ReviewActivity extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference ref = db.collection("reviews");
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review);
+    View myView;
 
-        final RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        final EditText etReview = (EditText) findViewById(R.id.review_entry);
-        Button submitReview = (Button) findViewById(R.id.btnSubmit);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (container == null) {
+            return null;
+        }
+
+        myView = inflater.inflate(R.layout.activity_review, container, false);
+
+        final RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
+        final EditText etReview = (EditText) myView.findViewById(R.id.review_entry);
+        Button submitReview = (Button) myView.findViewById(R.id.btnSubmit);
 
         submitReview.setOnClickListener(new View.OnClickListener() {
             Float rating;
@@ -46,7 +50,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
                 if (ratingBar.getRating() == 0)  {
-                    Toast.makeText(ReviewActivity.this, "Please include a rating.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Please include a rating.", Toast.LENGTH_LONG).show();
                 } else {
                     //save review data to database
                     rating = ratingBar.getRating();
@@ -65,9 +69,12 @@ public class ReviewActivity extends AppCompatActivity {
                     //reset view to empty state
                     etReview.setText("");
                     ratingBar.setRating(0);
-                    Toast.makeText(ReviewActivity.this, "Thank you for your review!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Thank you for your review!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        return myView;
     }
+
 }
