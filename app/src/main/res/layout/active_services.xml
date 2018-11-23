@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/active_services_recycler"
         android:layout_width="395dp"
         android:layout_height="587dp"
         app:layout_constraintBottom_toBottomOf="parent"

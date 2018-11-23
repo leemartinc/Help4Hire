@@ -114,7 +114,7 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
                             //check if user or provider
 
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            String RegisteredUserID = currentUser.getUid();
+                            final String RegisteredUserID = currentUser.getUid();
 
 
 
@@ -128,6 +128,8 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
 
                                     //save user role
                                     editor = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE).edit();
+                                    editor.putString("CURRENT_USER_UID", RegisteredUserID);
+                                    editor.apply();
 
                                     DocumentSnapshot documentSnapshot = task.getResult();
 
