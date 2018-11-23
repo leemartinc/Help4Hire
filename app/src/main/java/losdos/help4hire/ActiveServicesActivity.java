@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,7 +29,7 @@ public class ActiveServicesActivity extends Fragment {
 
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private CollectionReference reference = firestore.collection("requests");
-    private ResultsAdapter adapter;
+    private ActiveServicesAdapter adapter;
     Query q;
 
 
@@ -52,23 +53,20 @@ public class ActiveServicesActivity extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        q =  firestore.collection("requests")
-                .orderBy("serviceStatus")
-                .whereEqualTo("serviceStatus","active")
-                .whereEqualTo("requestUser", uid);
+        q =  reference.orderBy("serviceStatus");
 
 
-
-        FirestoreRecyclerOptions<preResults> options = new FirestoreRecyclerOptions.Builder<preResults>()
-                .setQuery(q, preResults.class)
+        FirestoreRecyclerOptions<PreActiveServices> options = new FirestoreRecyclerOptions.Builder<PreActiveServices>()
+                .setQuery(q, PreActiveServices.class)
                 .build();
 
-        adapter = new ResultsAdapter(options);
+        adapter = new ActiveServicesAdapter(options);
 
         recyclerView.setAdapter(adapter);
 
-
-        //adapter.startlistening();
+        adapter.startListening();
+        Toast.makeText(getActivity(), "im listening " + uid,
+                Toast.LENGTH_SHORT).show();
 
 
 
