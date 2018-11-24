@@ -29,57 +29,87 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
         //Bundle bundle = new Bundle();
 
 
-
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference UserReference = firestore.collection("users");
+        if (model.getRequestProvider() != null) {
+            UserReference.document(model.getRequestProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-        UserReference.document(model.getRequestProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
 
-                if(task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
+                        String providerFirstName = documentSnapshot.getString("firstName");
+                        String providerLastName = documentSnapshot.getString("lastName");
+                        String providerFullName = providerFirstName + " " + providerLastName;
 
-                    String providerFirstName = documentSnapshot.getString("firstName");
-                    String providerLastName = documentSnapshot.getString("lastName");
-                    String providerFullName = providerFirstName + " " + providerLastName;
+                        holder.textViewRequestProvider.setText(providerFullName);
 
-                    holder.textViewRequestProvider.setText(providerFullName);
-
-                }else{
-
+                    } else {
+                        holder.textViewRequestProvider.setText("ERROR");
+                    }
                 }
-
-            }
-        });
+            });
+        } else {
+            holder.textViewRequestProvider.setText("ERROR");
+        }
 
         CollectionReference serviceReference = firestore.collection("services");
 
+        if(model.getRequestService() != null){
         serviceReference.document(model.getRequestService()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
 
                     String serviceTitle = documentSnapshot.getString("serviceName");
 
                     holder.textViewRequestServiceTitle.setText(serviceTitle);
 
-                }else{
-
+                } else {
+                    holder.textViewRequestServiceTitle.setText("ERROR");
                 }
 
             }
         });
 
+    }else {
+            holder.textViewRequestServiceTitle.setText("ERROR");
+        }
+                if(model.getServiceStatus() != null) {
                     holder.textViewRequestStatus.setText(model.getServiceStatus());
 
-                    holder.textViewTotalCost.setText(model.getTotalCost());
+                    if (model.getServiceStatus().equals("Active")) {
+                        holder.locationBtn.setVisibility(View.VISIBLE);
+                        holder.messagesBtn.setVisibility(View.VISIBLE);
+                    }else if(model.getServiceStatus().equals("Pending")){
+                        holder.cancelBtn.setVisibility(View.VISIBLE);
+                    }else if(model.getServiceStatus().equals("Closed")){
+                        holder.reviewBtn.setVisibility(View.VISIBLE);
+                        holder.hireBtn.setVisibility(View.VISIBLE);
+                    }
 
-                    //button Magic
 
-    }
+
+                }else{holder.textViewRequestStatus.setText("ERROR");}
+
+                if(model.getServiceStatus() != null) {
+                        holder.textViewTotalCost.setText("Cost: $" + model.getTotalCost());
+
+                        //button Magic
+                    }else{ holder.textViewTotalCost.setText("ERROR");}
+
+
+
+
+
+
+
+
+
+                }
 
     @NonNull
     @Override
@@ -115,7 +145,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
             textViewRequestStatus = itemView.findViewById(R.id.provider_service_status);
             textViewTotalCost = itemView.findViewById(R.id.provider_service_cost);
 
-            /*
+
             messagesBtn = itemView.findViewById(R.id.btnMessage);
             locationBtn = itemView.findViewById(R.id.btnLocation);
 
@@ -123,7 +153,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
 
             reviewBtn = itemView.findViewById(R.id.btnReview);
             hireBtn = itemView.findViewById(R.id.btnHireAgain);
-            */
+
 
         }
     }
