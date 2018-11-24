@@ -11,14 +11,16 @@
 
   <android.support.v7.widget.CardView
       android:id="@+id/activeService"
-      android:layout_width="match_parent"
-      android:layout_height="135dp"
+      android:layout_width="386dp"
+      android:layout_height="wrap_content"
       android:elevation="50dp"
       android:padding="4dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginStart="5dp"
+      android:layout_marginEnd="5dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -32,40 +34,38 @@
 
       <TextView
           android:id="@+id/provider_name"
-          android:layout_width="148dp"
-          android:layout_height="29dp"
+          android:layout_width="270dp"
+          android:layout_height="30dp"
           android:layout_alignParentTop="true"
           android:layout_marginStart="4dp"
-          android:layout_marginEnd="26dp"
           android:textSize="20sp"
-          app:layout_constraintEnd_toStartOf="@+id/provider_service_title"
-          app:layout_constraintHorizontal_bias="0.0"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           tools:text="Shane Walker" />
 
       <TextView
           android:id="@+id/provider_service_title"
-          android:layout_width="99dp"
-          android:layout_height="27dp"
+          android:layout_width="247dp"
+          android:layout_height="28dp"
           android:layout_alignParentTop="true"
-          android:layout_marginEnd="20dp"
+          android:layout_marginStart="4dp"
           android:layout_marginBottom="8dp"
           android:layout_toEndOf="@+id/provider_name"
           android:textSize="20sp"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toStartOf="@+id/provider_service_status"
+          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintVertical_bias="0.0"
+          app:layout_constraintVertical_bias="0.3"
           tools:text="Dog walker" />
 
       <TextView
           android:id="@+id/provider_service_status"
-          android:layout_width="100dp"
-          android:layout_height="0dp"
+          android:layout_width="93dp"
+          android:layout_height="28dp"
           android:layout_alignParentRight="true"
           android:layout_marginEnd="4dp"
           android:layout_marginBottom="108dp"
+          android:textAlignment="textEnd"
           android:textSize="20sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -75,17 +75,15 @@
 
       <TextView
           android:id="@+id/provider_service_cost"
-          android:layout_width="113dp"
-          android:layout_height="23dp"
+          android:layout_width="171dp"
+          android:layout_height="27dp"
           android:layout_below="@+id/provider_name"
-          android:layout_marginStart="4dp"
-          android:layout_marginEnd="282dp"
-          android:layout_marginBottom="68dp"
+          android:layout_marginEnd="4dp"
+          android:layout_marginBottom="52dp"
+          android:textAlignment="textEnd"
           android:textSize="20sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
           tools:text="Cost: $46.19" />
 
       <!-- ACTIVE SERVICE -->
@@ -100,11 +98,11 @@
           android:background="#88e573"
           android:text="Message"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintStart_toStartOf="parent" />
 
       <Button
           android:id="@+id/btnLocation"
@@ -115,9 +113,9 @@
           android:background="#88e573"
           android:text="Location"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintEnd_toEndOf="parent" />
       <!-- END ACTIVE SERVICE -->
 
       <!-- PENDING SERVICE -->
@@ -132,11 +130,11 @@
           android:background="#88e573"
           android:text="Cancel"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintStart_toStartOf="parent" />
 
       <!-- END PENDING SERVICE -->
 
@@ -152,11 +150,11 @@
           android:background="#88e573"
           android:text="Review"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintStart_toStartOf="parent" />
 
       <Button
           android:id="@+id/btnHireAgain"
@@ -167,9 +165,9 @@
           android:background="#88e573"
           android:text="Hire Again"
           android:textColor="@android:color/white"
+          android:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          android:visibility="gone"/>
+          app:layout_constraintEnd_toEndOf="parent" />
 
       <!-- END CLOSED SERVICE -->
 

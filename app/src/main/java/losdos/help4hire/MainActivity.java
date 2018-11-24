@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onDrawerOpened(View drawerView) {
-                       hideKeyboard(drawerView);
+                        hideKeyboard(drawerView);
                     }
 
                     @Override
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 showProviderItem();
             }
-        }, 1000);
+        }, 1500);
     }
 
 
@@ -134,11 +134,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_Menu= navigationView.getMenu();
 
-            if(role.equals("provider")) {
+        if(role.equals("provider")) {
 
-                nav_Menu.findItem(R.id.provider_options).setVisible(true);
+            nav_Menu.findItem(R.id.provider_options).setVisible(true);
 
-            }
+        }
 
     }
 
