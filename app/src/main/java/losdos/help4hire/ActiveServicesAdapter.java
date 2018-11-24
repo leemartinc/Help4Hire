@@ -28,9 +28,50 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
     protected void onBindViewHolder(@NonNull final ActiveServicesHolder holder, int position, @NonNull PreActiveServices model) {
         //Bundle bundle = new Bundle();
 
-                    holder.textViewRequestProvider.setText(model.getRequestProvider());
 
-                    holder.textViewRequestServiceTitle.setText(model.getRequestService());
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        CollectionReference UserReference = firestore.collection("users");
+
+        UserReference.document(model.getRequestProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+
+                    String providerFirstName = documentSnapshot.getString("firstName");
+                    String providerLastName = documentSnapshot.getString("lastName");
+                    String providerFullName = providerFirstName + " " + providerLastName;
+
+                    holder.textViewRequestProvider.setText(providerFullName);
+
+                }else{
+
+                }
+
+            }
+        });
+
+        CollectionReference serviceReference = firestore.collection("services");
+
+        serviceReference.document(model.getRequestService()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+
+                    String serviceTitle = documentSnapshot.getString("serviceName");
+
+                    holder.textViewRequestServiceTitle.setText(serviceTitle);
+
+                }else{
+
+                }
+
+            }
+        });
 
                     holder.textViewRequestStatus.setText(model.getServiceStatus());
 
