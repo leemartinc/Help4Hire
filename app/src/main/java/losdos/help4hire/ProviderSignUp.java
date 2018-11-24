@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,8 +36,8 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
     private static final String KEY_HOURLY = "Hourly Rate";
     private static final String KEY_AGE_VALE= "Age Value";
     private static final String KEY_DOLLAR_VALUE = "Dollar Value";
-    private static final String KEY_YES_INSURED = "Yes Insured";
-    private static final String KEY_NO_INSURED = "No Insured";
+    private static final String KEY_YES_INSURED = "Insured";
+    private static final String KEY_NO_INSURED = "Insured";
 
 
     private EditText fName;
@@ -49,6 +50,8 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
     private EditText dollarEditText;
     private RadioButton yesButton;
     private RadioButton noButton;
+    private RadioGroup daGroup;
+    private RadioGroup daGroup2;
 
 
     // Reference to firestore database
@@ -80,6 +83,8 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         dollarEditText = findViewById(R.id.dollarEditText);
         yesButton = findViewById(R.id.yesRadioButton);
         noButton = findViewById(R.id.noRadioButton);
+        daGroup = findViewById(R.id.myRadioGroup);
+        daGroup2 = findViewById(R.id.hourlyFixedRadioGroup);
 
 
         //add input for email address and password and send that through authentication
@@ -133,30 +138,6 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
     // This method will save into firestore
     public void saveInfo(View view){
 
-//        fName = findViewById(R.id.firstName);
-//        lName = findViewById(R.id.lastName);
-//        address = findViewById(R.id.Address);
-//        spinner = findViewById(R.id.mySpinner);
-//        fixedRadioButton = findViewById(R.id.fixedRadioButton);
-//        hourlyRadioButton = findViewById(R.id.hourlyRadioButton);
-//        ageEditText = findViewById(R.id.ageEditText);
-//        dollarEditText = findViewById(R.id.dollarEditText);
-//        yesButton = findViewById(R.id.yesRadioButton);
-//        noButton = findViewById(R.id.noRadioButton);
-
-//
-//        private static final String TAG = "MainActivity";
-//        private static final String KEY_FNAME = "First Name";
-//        private static final String KEY_LNAME = "Last Name";
-//        private static final String KEY_ADDRESS = "Address";
-//        private static final String KEY_SPINNER_VALUE = "Spinner Value";
-//        private static final String KEY_FIXED= "Fixed Rate";
-//        private static final String KEY_HOURLY = "Hourly Rate";
-//        private static final String KEY_AGE_VALE= "Age Value";
-//        private static final String KEY_DOLLAR_VALUE = "Dollar Value";
-//        private static final String KEY_YES_INSURED = "Yes Insured";
-//        private static final String KEY_NO_INSURED = "No Insured";
-
         String fname = fName.getText().toString();
         String lname = lName.getText().toString();
         String my_address = address.getText().toString();
@@ -172,13 +153,21 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         myMap.put(KEY_FNAME,fname);
         myMap.put(KEY_LNAME,lname);
         myMap.put(KEY_ADDRESS, my_address);
-        myMap.put(KEY_FIXED, fixed_radioButton);
-        myMap.put(KEY_HOURLY, hourly_Radiobutton);
         myMap.put(KEY_AGE_VALE, age);
         myMap.put(KEY_DOLLAR_VALUE, dollar);
-        myMap.put(KEY_YES_INSURED, yes_button);
-        myMap.put(KEY_NO_INSURED, no_button);
         myMap.put(KEY_SPINNER_VALUE , spinner);
+
+        if(daGroup2.getCheckedRadioButtonId() == R.id.hourlyRadioButton){
+            myMap.put(KEY_HOURLY, true);
+        }else if(daGroup2.getCheckedRadioButtonId() == R.id.fixedRadioButton){
+            myMap.put(KEY_FIXED , true );
+        }
+
+        if (daGroup.getCheckedRadioButtonId() == R.id.yesRadioButton){
+            myMap.put(KEY_YES_INSURED, true);
+        } else if (daGroup.getCheckedRadioButtonId() == R.id.noRadioButton){
+            myMap.put(KEY_NO_INSURED, false);
+        }
 
         db.collection("demoProviders").document("First Provider")
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
