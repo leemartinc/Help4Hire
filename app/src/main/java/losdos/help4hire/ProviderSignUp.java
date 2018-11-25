@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,11 +77,19 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         fName = findViewById(R.id.firstName);
         lName = findViewById(R.id.lastName);
         address = findViewById(R.id.Address);
+        ageEditText = findViewById(R.id.ageEditText);
+        dollarEditText = findViewById(R.id.dollarEditText);
+//
+//        if(isEmptyField(fName))return;
+//        if(isEmptyField(lName))return;
+//        if(isEmptyField(address))return;
+//        if(isEmptyField(ageEditText))return;
+//        if(isEmptyField(dollarEditText))return;
+
         my_spinner = (Spinner)findViewById(R.id.mySpinner);
         fixedRadioButton = findViewById(R.id.fixedRadioButton);
         hourlyRadioButton = findViewById(R.id.hourlyRadioButton);
-        ageEditText = findViewById(R.id.ageEditText);
-        dollarEditText = findViewById(R.id.dollarEditText);
+
         yesButton = findViewById(R.id.yesRadioButton);
         noButton = findViewById(R.id.noRadioButton);
         daGroup = findViewById(R.id.myRadioGroup);
@@ -149,6 +158,14 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         String yes_button = yesButton.getText().toString();
         String no_button = noButton.getText().toString();
 
+        // checks field if empty or not
+        if(isEmptyField(fName))return;
+        if(isEmptyField(lName))return;
+        if(isEmptyField(address))return;
+        if(isEmptyField(ageEditText))return;
+        if(isEmptyField(dollarEditText))return;
+
+
         Map<String,Object> myMap = new HashMap<String,Object>();
         myMap.put(KEY_FNAME,fname);
         myMap.put(KEY_LNAME,lname);
@@ -169,11 +186,14 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
             myMap.put(KEY_NO_INSURED, false);
         }
 
+
         db.collection("demoProviders").document("First Provider")
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(ProviderSignUp.this, "User Saved", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ProviderSignUp.this,MainActivity.class));
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -182,6 +202,14 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
                 Log.d(TAG, e.toString());
             }
         });
+    }
+
+    // This method will validate if EditText fields are empty
+    private boolean isEmptyField (EditText editText){
+        boolean result = editText.getText().toString().length() <= 0;
+        if (result)
+            Toast.makeText(ProviderSignUp.this, "Fill all fields!", Toast.LENGTH_SHORT).show();
+        return result;
     }
 }
 
