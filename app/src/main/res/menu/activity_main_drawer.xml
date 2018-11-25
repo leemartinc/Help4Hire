@@ -14,7 +14,7 @@
 
 
         <item
-        android:id="@+id/provider_options"
+        android:id="@+id/nav_provider_options"
         android:title="Provider Options"
             android:visible="false"/>
 

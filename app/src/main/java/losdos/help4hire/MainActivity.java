@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(role.equals("provider")) {
 
-            nav_Menu.findItem(R.id.provider_options).setVisible(true);
+            nav_Menu.findItem(R.id.nav_provider_options).setVisible(true);
 
         }
 
@@ -171,6 +171,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FirebaseAuth.getInstance().signOut();
             prefs.edit().remove("role").apply();
             startActivity(new Intent(MainActivity.this,OnboardingActivity.class));
+
+        }else if (id == R.id.nav_provider_options) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame
+                            , new ProviderOptions()).addToBackStack(null)
+                    .commit();
 
         }
 
