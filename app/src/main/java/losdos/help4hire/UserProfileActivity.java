@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,6 +96,10 @@ public class UserProfileActivity extends AppCompatActivity {
         String lname = lName.getText().toString();
         String my_address = address.getText().toString();
 
+        // Checks field for empty or not
+        if(isEmptyField(fName))return;
+        if(isEmptyField(lName))return;
+        if(isEmptyField(address))return;
 
         Map<String,Object> myMap = new HashMap<String,Object>();
         myMap.put(KEY_FNAME,fname);
@@ -107,6 +112,8 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(UserProfileActivity.this, "User Saved", Toast.LENGTH_SHORT).show();
+                // This should go to the home screen if the user is succesfully entered
+                startActivity(new Intent(UserProfileActivity.this,MainActivity.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -115,6 +122,14 @@ public class UserProfileActivity extends AppCompatActivity {
                 Log.d(TAG, e.toString());
             }
         });
+    }
+
+    // This method will validate if EditText fields are empty
+    private boolean isEmptyField (EditText editText){
+        boolean result = editText.getText().toString().length() <= 0;
+        if (result)
+            Toast.makeText(UserProfileActivity.this, "Fill all fields!", Toast.LENGTH_SHORT).show();
+        return result;
     }
 
 }
