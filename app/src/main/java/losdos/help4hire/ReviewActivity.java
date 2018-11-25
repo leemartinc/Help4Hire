@@ -3,6 +3,7 @@ package losdos.help4hire;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class ReviewActivity extends Fragment {
         Bundle bundle = this.getArguments();
 //        if (bundle != null) {
             final String reviewee = bundle.getString("reviewee");
+            final String title = bundle.getString("title");
             Log.d("help4hire", "STRING FROM BUNDLE: " + reviewee);
 //        }
 
@@ -69,14 +71,22 @@ public class ReviewActivity extends Fragment {
                     data.put("reviewee", reviewee);
                     data.put("reviewer", user.getEmail()); //can get other identifiers such as UUID
 
-                    data.put("service name", "");
+                    data.put("service name", title);
                     ref.add(data);
 
                     //reset view to empty state
-                    //should also probably exit the review screen here
                     etReview.setText("");
                     ratingBar.setRating(0);
                     Toast.makeText(getActivity(), "Thank you for your review!", Toast.LENGTH_SHORT).show();
+
+                    //go back to ActiveServices
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    ActiveServicesActivity activeServicesFrag = new ActiveServicesActivity();
+                    activity.getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content_frame, activeServicesFrag)
+                            .addToBackStack("nextFragment")
+                            .commit();
                 }
             }
         });

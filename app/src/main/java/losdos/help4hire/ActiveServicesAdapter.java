@@ -1,11 +1,8 @@
 package losdos.help4hire;
 
-import android.app.Activity;
-import android.content.Context;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,9 +19,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveServices, ActiveServicesAdapter.ActiveServicesHolder> {
+public static  String providerFullName;
+public static String serviceTitle;
 
     public ActiveServicesAdapter(@NonNull FirestoreRecyclerOptions<PreActiveServices> options) {
         super(options);
@@ -32,8 +30,6 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
 
     @Override
     protected void onBindViewHolder(@NonNull final ActiveServicesHolder holder, int position, @NonNull PreActiveServices model) {
-//        Bundle bundle = new Bundle();
-
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference UserReference = firestore.collection("users");
@@ -47,7 +43,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
 
                         String providerFirstName = documentSnapshot.getString("firstName");
                         String providerLastName = documentSnapshot.getString("lastName");
-                        String providerFullName = providerFirstName + " " + providerLastName;
+                        providerFullName = providerFirstName + " " + providerLastName;
 
                         holder.textViewRequestProvider.setText(providerFullName);
 
@@ -70,7 +66,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
                 if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
 
-                    String serviceTitle = documentSnapshot.getString("serviceName");
+                    serviceTitle = documentSnapshot.getString("serviceName");
 
                     holder.textViewRequestServiceTitle.setText(serviceTitle);
 
@@ -124,7 +120,8 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
             @Override
             public void onClick(View view) {
 
-                bundle.putString("reviewee", "providerFullName"); // need to get this from onBindViewHolder() above
+                bundle.putString("reviewee", providerFullName);
+                bundle.putString("title", serviceTitle);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 ReviewActivity reviewFrag = new ReviewActivity();
                 reviewFrag.setArguments(bundle);
