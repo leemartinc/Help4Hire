@@ -2,6 +2,8 @@ package losdos.help4hire;
 
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,33 @@ public class Search extends android.support.v4.app.Fragment {
                     }
                 }
             });
+
+            queryArg.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("toSearch", queryArg.getText().toString());
+
+                    Results resultFrag = new Results();
+                    resultFrag.setArguments(bundle);
+                    
+                    fm.beginTransaction().replace(R.id.content_frame
+                            , resultFrag).addToBackStack("Search")
+                            .commit();
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
 
         return myView;
 

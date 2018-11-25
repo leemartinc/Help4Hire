@@ -60,8 +60,15 @@ public class Results extends Fragment {
 
         queryArgs  = myView.findViewById(R.id.resSearch);
 
+        queryArgs.requestFocus();
+
+
         Bundle bundle = getArguments();
         String query = bundle.getString("toSearch");
+
+        queryArgs.setText(query);
+        queryArgs.setSelection(query.length());
+
 
         //queryArgs.setText(query);
 
@@ -73,8 +80,6 @@ public class Results extends Fragment {
 
 
 
-
-        queryArgs.setText(query);
 
         //adapter.startListening();
 
