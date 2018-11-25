@@ -1,8 +1,14 @@
 package losdos.help4hire;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +32,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
 
     @Override
     protected void onBindViewHolder(@NonNull final ActiveServicesHolder holder, int position, @NonNull PreActiveServices model) {
-        //Bundle bundle = new Bundle();
+//        Bundle bundle = new Bundle();
 
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -81,43 +87,54 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
                 if(model.getServiceStatus() != null) {
                     holder.textViewRequestStatus.setText(model.getServiceStatus());
 
-                    if (model.getServiceStatus().equals("Active")) {
-                        holder.locationBtn.setVisibility(View.VISIBLE);
-                        holder.messagesBtn.setVisibility(View.VISIBLE);
-                    }else if(model.getServiceStatus().equals("Pending")){
-                        holder.cancelBtn.setVisibility(View.VISIBLE);
-                    }else if(model.getServiceStatus().equals("Closed")){
-                        holder.reviewBtn.setVisibility(View.VISIBLE);
-                        holder.hireBtn.setVisibility(View.VISIBLE);
+                    switch (model.getServiceStatus().toUpperCase()) {
+                        case "ACTIVE":
+                            holder.locationBtn.setVisibility(View.VISIBLE);
+                            holder.messagesBtn.setVisibility(View.VISIBLE);
+                            break;
+                        case "PENDING":
+                            holder.cancelBtn.setVisibility(View.VISIBLE);
+                            break;
+                        case "CLOSED":
+                            holder.reviewBtn.setVisibility(View.VISIBLE);
+                            holder.hireBtn.setVisibility(View.VISIBLE);
+                            break;
                     }
-
-
 
                 }else{holder.textViewRequestStatus.setText("ERROR");}
 
                 if(model.getServiceStatus() != null) {
                         holder.textViewTotalCost.setText("Cost: $" + model.getTotalCost());
 
-                        //button Magic
                     }else{ holder.textViewTotalCost.setText("ERROR");}
-
-
-
-
-
-
-
-
-
                 }
 
     @NonNull
     @Override
     public ActiveServicesHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        final Bundle bundle = new Bundle();
+
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.active_services_item,
                 viewGroup, false);
 
+        Button reviewButton = v.findViewById(R.id.btnReview);
+        reviewButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                bundle.putString("reviewee", "providerFullName"); // need to get this from onBindViewHolder() above
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                ReviewActivity reviewFrag = new ReviewActivity();
+                reviewFrag.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, reviewFrag)
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+        });
 
         return new ActiveServicesHolder(v);
     }
@@ -153,8 +170,7 @@ public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveSer
 
             reviewBtn = itemView.findViewById(R.id.btnReview);
             hireBtn = itemView.findViewById(R.id.btnHireAgain);
-
-
+            
         }
     }
 }

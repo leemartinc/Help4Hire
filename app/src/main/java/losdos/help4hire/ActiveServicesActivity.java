@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import com.google.firebase.firestore.Query;
 public class ActiveServicesActivity extends Fragment {
 
     View myView;
-
     RecyclerView recyclerView;
 
     SharedPreferences prefs;
@@ -31,11 +31,10 @@ public class ActiveServicesActivity extends Fragment {
     private ActiveServicesAdapter adapter;
     Query q;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         myView = inflater.inflate(R.layout.active_services, container, false);
 
         //get shared preferences
@@ -66,8 +65,6 @@ public class ActiveServicesActivity extends Fragment {
         adapter.startListening();
         Toast.makeText(getActivity(), "im listening " + uid,
                 Toast.LENGTH_SHORT).show();
-
-
 
         return myView;
     }
