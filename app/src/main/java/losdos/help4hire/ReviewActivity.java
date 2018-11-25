@@ -3,6 +3,7 @@ package losdos.help4hire;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,11 @@ public class ReviewActivity extends Fragment {
         if (container == null) {
             return null;
         }
+        Bundle bundle = this.getArguments();
+//        if (bundle != null) {
+            final String reviewee = bundle.getString("reviewee");
+            Log.d("help4hire", "STRING FROM BUNDLE: " + reviewee);
+//        }
 
         myView = inflater.inflate(R.layout.activity_review, container, false);
 
@@ -60,13 +66,14 @@ public class ReviewActivity extends Fragment {
                     data.put("review", review);
                     data.put("review date", FieldValue.serverTimestamp());
                     data.put("review rating", rating);
-                    data.put("reviewee", "");
+                    data.put("reviewee", reviewee);
                     data.put("reviewer", user.getEmail()); //can get other identifiers such as UUID
 
                     data.put("service name", "");
                     ref.add(data);
 
                     //reset view to empty state
+                    //should also probably exit the review screen here
                     etReview.setText("");
                     ratingBar.setRating(0);
                     Toast.makeText(getActivity(), "Thank you for your review!", Toast.LENGTH_SHORT).show();
