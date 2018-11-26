@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +40,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private EditText fName;
     private EditText lName;
     private EditText address;
+    private TextView resetPass;
 
     // Reference to firestore database
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,39 +48,12 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
+        setContentView(R.layout.activity_user_profile);
 
 
         fName = findViewById(R.id.firstNameTextView);
         lName = findViewById(R.id.lastNameTextView);
         address = findViewById(R.id.addressTextView);
-
-        //no need for a toolbar here
-
-        //also, add input for email address and password and send that through authentication
-        //using a method like the one below
-        /*
-        mAuth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUI(user);
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-                }
-
-                // ...
-            }
-        });
-         */
 
     }
 
