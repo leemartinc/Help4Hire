@@ -24,7 +24,9 @@ import com.google.firebase.firestore.GeoPoint;
 public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveServices, ActiveServicesAdapter.ActiveServicesHolder> {
 public static  String providerFullName;
 public static String serviceTitle;
-public static GeoPoint loc;
+public static double lat;
+public static double lng;
+//public static GeoPoint latlng;
 
     public ActiveServicesAdapter(@NonNull FirestoreRecyclerOptions<PreActiveServices> options) {
         super(options);
@@ -41,12 +43,13 @@ public static GeoPoint loc;
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                     if (task.isSuccessful()) {
+//                        GeoPoint latlng;
                         DocumentSnapshot documentSnapshot = task.getResult();
+
 
                         String providerFirstName = documentSnapshot.getString("firstName");
                         String providerLastName = documentSnapshot.getString("lastName");
                         providerFullName = providerFirstName + " " + providerLastName;
-                        loc = documentSnapshot.getGeoPoint("providerLocation");
 
                         holder.textViewRequestProvider.setText(providerFullName);
 
@@ -106,6 +109,40 @@ public static GeoPoint loc;
                         holder.textViewTotalCost.setText("Cost: $" + model.getTotalCost());
 
                     }else{ holder.textViewTotalCost.setText("ERROR");}
+
+                    if(model.getProviderLocation() != null){
+                    CollectionReference requestsReference = firestore.collection("requests");
+//        requestsReference.document(model.getProviderLocation()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        requestsReference.document(String.valueOf(model.getProviderLocation())).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                GeoPoint latlng;
+
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                    System.out.println(documentSnapshot.getString("providerLocation"));
+//                                    Log.d("help4hire5", String.valueOf(documentSnapshot));
+//                                    latlng = documentSnapshot.getGeoPoint("providerLoation");
+//                                    Log.d("help4hire5", String.valueOf(documentSnapshot.getData()));
+//                                    if (latlng != null){
+//                                        Log.d("help4hire5", "LATLNG IS NOT NULL");
+//                                    } else {
+//                                        Log.d("help4hire5", "LATLNG IS NULLLLLLLL");
+//
+//                                    }
+                                } else{
+                                Log.d("help4hire", "TASK WAS NOT SUCCESSFUL");}
+                            }
+
+                        });
+
+
+
+
+                } else {
+            Log.d("help4hire", "GETLOCATION WAS NULLLLLLL");
+                    }
                 }
 
     @NonNull
@@ -143,6 +180,8 @@ public static GeoPoint loc;
             public void onClick(View view) {
 
 //                bundle.putAll("loc", loc);
+                bundle.putDouble("lat", lat);
+                bundle.putDouble("lng", lng);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 MapsActivity mapsFrag = new MapsActivity();
                 mapsFrag.setArguments(bundle);

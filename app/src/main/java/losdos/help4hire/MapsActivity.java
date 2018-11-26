@@ -17,6 +17,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.GeoPoint;
 
+import static losdos.help4hire.ActiveServicesAdapter.lat;
+import static losdos.help4hire.ActiveServicesAdapter.lng;
+
 public class MapsActivity extends Fragment implements OnMapReadyCallback {
 
     View myView;
@@ -27,9 +30,12 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
 
         Bundle bundle = this.getArguments();
 //        if (bundle != null) {
-        final String loc = bundle.getString("loc");
+//        final String loc = bundle.getString("loc");
 //        final String title = bundle.getString("title");
-        Log.d("help4hire", "STRING FROM BUNDLE: " + loc);
+        final double lat = bundle.getDouble("lat");
+        final double lng = bundle.getDouble("lng");
+        Log.d("help4hire", "LAT FROM BUNDLE: " + lat);
+        Log.d("help4hire", "LNG FROM BUNDLE: " + lng);
 //        }
         myView = inflater.inflate(R.layout.activity_maps, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -54,8 +60,8 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
 //        GeoPoint loc = new GeoPoint(33, 12);
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng atlanta = new LatLng(lat, lng);
+        mMap.addMarker(new MarkerOptions().position(atlanta).title("Marker in Atanta"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(atlanta));
     }
 }
