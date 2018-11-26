@@ -59,7 +59,7 @@
         <activity android:name=".PreSignUp" />
         <activity android:name=".ProviderSignUp" />
         <activity android:name=".UserProfileActivity" />
-        <activity android:name=".ReviewActivity" />
+        <!-- <activity android:name=".ReviewActivity" /> -->
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -74,7 +74,14 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:exported="true"
+            android:label="@string/title_activity_maps" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity android:name=".Messages"></activity>
     </application>
 
 </manifest>
