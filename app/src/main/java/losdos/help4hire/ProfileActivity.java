@@ -14,7 +14,7 @@ public class ProfileActivity extends Fragment {
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.user_profile, container, false);
+        myView = inflater.inflate(R.layout.activity_user_profile, container, false);
         return myView;
     }
 
