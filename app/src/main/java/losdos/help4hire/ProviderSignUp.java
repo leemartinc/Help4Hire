@@ -79,12 +79,6 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         address = findViewById(R.id.Address);
         ageEditText = findViewById(R.id.ageEditText);
         dollarEditText = findViewById(R.id.dollarEditText);
-//
-//        if(isEmptyField(fName))return;
-//        if(isEmptyField(lName))return;
-//        if(isEmptyField(address))return;
-//        if(isEmptyField(ageEditText))return;
-//        if(isEmptyField(dollarEditText))return;
 
         my_spinner = (Spinner)findViewById(R.id.mySpinner);
         fixedRadioButton = findViewById(R.id.fixedRadioButton);
@@ -94,35 +88,6 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         noButton = findViewById(R.id.noRadioButton);
         daGroup = findViewById(R.id.myRadioGroup);
         daGroup2 = findViewById(R.id.hourlyFixedRadioGroup);
-
-
-        //add input for email address and password and send that through authentication
-        //so that we can add them as a user
-        //using the method below
-        /*
-        mAuth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUI(user);
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-                }
-
-                // ...
-            }
-        });
-         */
-
-
     }
 
     @Override
@@ -186,8 +151,13 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
             myMap.put(KEY_NO_INSURED, false);
         }
 
+         /*
+         By geting rid of the document, Firestore will generate a new Id each time a
+         new user is created.
 
-        db.collection("demoProviders").document("First Provider")
+        */
+
+        db.collection("newProviders").document()
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

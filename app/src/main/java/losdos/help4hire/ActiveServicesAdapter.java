@@ -193,6 +193,23 @@ public static double lng;
             }
         });
 
+        Button messageButton = v.findViewById(R.id.btnMessage);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Messages messagesFrag = new Messages();
+                messagesFrag.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, messagesFrag)
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+        });
+
         return new ActiveServicesHolder(v);
     }
 

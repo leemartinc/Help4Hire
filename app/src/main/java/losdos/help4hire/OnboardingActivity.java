@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -81,9 +83,31 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
         else if (view.getId() == R.id.signupButton){
 
             //to sign up screen signUp
+            if(input_email.length() == 0 || input_password.length() == 0){
+                Snackbar snackbar = Snackbar.make(activity_onboard, "Enter your Email and Password",Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            }else {
+                String email = input_email.getText().toString().trim();
+                String password = input_password.getText().toString().trim();
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            finish();
+                            startActivity(new Intent(OnboardingActivity.this, PreSignUp.class));
+                        } else {
 
-            startActivity(new Intent(OnboardingActivity.this,PreSignUp.class));
-            finish();
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+                });
+            }
 
         }
 
@@ -167,12 +191,6 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
 
 
                 });
-
-        //prefs = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
-        //String key = prefs.getString("role", "nani");
-
-        //Snackbar snackbar = Snackbar.make(activity_onboard, "" + key,Snackbar.LENGTH_SHORT);
-        //snackbar.show();
     }
 
     public void hideKeyboard(View view){

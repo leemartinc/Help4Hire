@@ -26,7 +26,7 @@
     </FrameLayout>
 
     <!--<include layout="@layout/content_main" />-->
-    <!--<include layout="@layout/user_profile" />-->
+    <!--<include layout="@layout/activity_user_profile" />-->
     <!--<include layout="@layout/active_services" />-->
 
 
