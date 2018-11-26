@@ -1,6 +1,7 @@
 package losdos.help4hire;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
     private EditText input_email;
 
 
-    private RelativeLayout activity_forgot;
+    private ConstraintLayout activity_forgot;
 
     private FirebaseAuth auth;
 
@@ -33,10 +34,10 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
 
         //view
 
-        input_email = (EditText)findViewById(R.id.usernameEditText);
+        input_email = (EditText)findViewById(R.id.EnterEmail);
         btnResetPass = (Button) findViewById(R.id.resetpassword);
         btnBack = (TextView) findViewById(R.id.BackButton);
-        activity_forgot = (RelativeLayout)findViewById(R.id.activity_forgot_password);
+        activity_forgot = (ConstraintLayout) findViewById(R.id.activity_forgot_password);
 
         btnResetPass.setOnClickListener(this);
         btnBack.setOnClickListener(this);

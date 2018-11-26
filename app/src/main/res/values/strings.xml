@@ -15,8 +15,8 @@
     <string name="login">Login</string>
     <string name="signup">SignUp</string>
     <string name="email">Email</string>
-    <string name="password">password</string>
-    <string name="forgot_username_or_password">forgot username or password</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
     <string name="user">User</string>
     <string name="sign_up_as_a_user_or_provider">Sign up as a User or Provider</string>
     <string name="provider">Provider</string>
@@ -28,6 +28,9 @@
     <string name="save">Save</string>
     <string name="title_activity_provider_sign_up">ProviderSignUp</string>
     <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="email_id">Email Id</string>
+    <string name="back">Back</string>
+    <string name="enter_you_email_id_to_receive_instructions_to_reset_password">Enter you Email ID to receive instructions to reset password</string>
 
     <!--This Array Below is for the Spinner in the Provider Sign Up-->
     <string-array name="provider_choices">
