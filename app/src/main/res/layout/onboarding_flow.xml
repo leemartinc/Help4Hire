@@ -68,28 +68,30 @@
         android:id="@+id/loginButton"
         android:layout_width="124dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/login"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/holo_green_light"
         android:elevation="10dp"
+        android:onClick="hideKeyboard"
+        android:text="@string/login"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/forgotButton"
         app:layout_constraintEnd_toStartOf="@+id/signupButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-        app:layout_constraintVertical_bias="0.467"
-        tools:background="#68B684"
-        android:onClick="hideKeyboard"/>
+        app:layout_constraintVertical_bias="0.467" />
 
     <Button
         android:id="@+id/signupButton"
         android:layout_width="124dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:accessibilityHeading="true"
+        android:background="@android:color/holo_green_light"
         android:elevation="10dp"
+        android:onClick="hideKeyboard"
         android:text="@string/signup"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/forgotButton"
@@ -97,9 +99,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/loginButton"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-        app:layout_constraintVertical_bias="0.467"
-        tools:background="#68B684"
-        android:onClick="hideKeyboard"/>
+        app:layout_constraintVertical_bias="0.467" />
 
     <Button
         android:id="@+id/forgotButton"
@@ -108,14 +108,13 @@
         android:layout_height="31dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/forgot_username_or_password"
+        android:onClick="hideKeyboard"
+        android:text="@string/forgot_password"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.793"
-        android:onClick="hideKeyboard"/>
+        app:layout_constraintVertical_bias="0.784" />
 
 </android.support.constraint.ConstraintLayout>
