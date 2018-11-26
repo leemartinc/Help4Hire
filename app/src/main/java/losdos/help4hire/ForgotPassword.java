@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,7 +75,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
-                        if(!task.isSuccessful())
+                        if(task.isSuccessful())
                         {
                             Snackbar snackbar = Snackbar.make(activity_forgot, "We have sent password to email :"+email,Snackbar.LENGTH_SHORT);
                             snackbar.show();
@@ -84,7 +83,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
 
                         else
                         {
-                            Snackbar snackbar = Snackbar.make(activity_forgot, "Failed to send password",Snackbar.LENGTH_SHORT);
+                            Snackbar snackbar = Snackbar.make(activity_forgot, "Failed to send password, user does not exist",Snackbar.LENGTH_SHORT);
                             snackbar.show();
                         }
                     }
