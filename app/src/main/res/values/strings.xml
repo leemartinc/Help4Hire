@@ -36,4 +36,5 @@
         <item> Baby Sitter</item>
         <item> Car Washer</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>
