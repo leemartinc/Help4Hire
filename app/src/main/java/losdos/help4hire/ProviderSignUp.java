@@ -16,11 +16,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.dynamic.ObjectWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -29,16 +32,16 @@ import java.util.Map;
 public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final String TAG = "MainActivity";
-    private static final String KEY_FNAME = "First Name";
-    private static final String KEY_LNAME = "Last Name";
-    private static final String KEY_ADDRESS = "Address";
+    private static final String KEY_FNAME = "firstName";
+    private static final String KEY_LNAME = "lastName";
+    private static final String KEY_ADDRESS = "address";
     private static final String KEY_SPINNER_VALUE = "Spinner Value";
-    private static final String KEY_FIXED= "Fixed Rate";
-    private static final String KEY_HOURLY = "Hourly Rate";
-    private static final String KEY_AGE_VALE= "Age Value";
-    private static final String KEY_DOLLAR_VALUE = "Dollar Value";
-    private static final String KEY_YES_INSURED = "Insured";
-    private static final String KEY_NO_INSURED = "Insured";
+    private static final String KEY_FIXED= "fixedRate";
+    private static final String KEY_HOURLY = "hourlyRate";
+    private static final String KEY_AGE_VALE= "ageValue";
+    private static final String KEY_DOLLAR_VALUE = "dollarValue";
+    private static final String KEY_YES_INSURED = "insured";
+    private static final String KEY_NO_INSURED = "insured";
 
 
     private EditText fName;
@@ -53,6 +56,9 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
     private RadioButton noButton;
     private RadioGroup daGroup;
     private RadioGroup daGroup2;
+
+    private String RegisteredUserID;
+    private TextView userEmail;
 
 
     // Reference to firestore database
@@ -88,6 +94,16 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         noButton = findViewById(R.id.noRadioButton);
         daGroup = findViewById(R.id.myRadioGroup);
         daGroup2 = findViewById(R.id.hourlyFixedRadioGroup);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String RegisteredUserEmail = currentUser.getEmail();
+
+        RegisteredUserID = currentUser.getUid();
+
+        userEmail = findViewById(R.id.providerProfileEmail);
+        userEmail.setText(RegisteredUserEmail);
+
+
     }
 
     @Override
@@ -138,6 +154,8 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
         myMap.put(KEY_AGE_VALE, age);
         myMap.put(KEY_DOLLAR_VALUE, dollar);
         myMap.put(KEY_SPINNER_VALUE , spinner);
+        myMap.put("role", "provider");
+        myMap.put("rating", 3);
 
         if(daGroup2.getCheckedRadioButtonId() == R.id.hourlyRadioButton){
             myMap.put(KEY_HOURLY, true);
@@ -157,7 +175,7 @@ public class ProviderSignUp extends AppCompatActivity implements AdapterView.OnI
 
         */
 
-        db.collection("newProviders").document()
+        db.collection("users").document(RegisteredUserID)
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
