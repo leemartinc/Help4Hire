@@ -10,6 +10,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+
     <application
         android:name=".Database"
         android:allowBackup="true"
@@ -59,7 +60,7 @@
         <activity android:name=".PreSignUp" />
         <activity android:name=".ProviderSignUp" />
         <activity android:name=".UserProfileActivity" />
-        <activity android:name=".ReviewActivity" />
+        <!--<activity android:name=".ReviewActivity" />-->
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -73,8 +74,12 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:exported="true"
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
     </application>
 
 </manifest>

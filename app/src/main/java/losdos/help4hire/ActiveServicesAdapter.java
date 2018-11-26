@@ -19,10 +19,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 public class ActiveServicesAdapter extends FirestoreRecyclerAdapter<PreActiveServices, ActiveServicesAdapter.ActiveServicesHolder> {
 public static  String providerFullName;
 public static String serviceTitle;
+public static GeoPoint loc;
 
     public ActiveServicesAdapter(@NonNull FirestoreRecyclerOptions<PreActiveServices> options) {
         super(options);
@@ -44,6 +46,7 @@ public static String serviceTitle;
                         String providerFirstName = documentSnapshot.getString("firstName");
                         String providerLastName = documentSnapshot.getString("lastName");
                         providerFullName = providerFirstName + " " + providerLastName;
+                        loc = documentSnapshot.getGeoPoint("providerLocation");
 
                         holder.textViewRequestProvider.setText(providerFullName);
 
@@ -128,6 +131,24 @@ public static String serviceTitle;
                 activity.getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content_frame, reviewFrag)
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+        });
+
+        Button locationButton = v.findViewById(R.id.btnLocation);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+//                bundle.putAll("loc", loc);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                MapsActivity mapsFrag = new MapsActivity();
+                mapsFrag.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, mapsFrag)
                         .addToBackStack("nextFragment")
                         .commit();
             }
