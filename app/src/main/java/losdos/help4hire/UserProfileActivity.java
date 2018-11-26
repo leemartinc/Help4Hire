@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
@@ -40,7 +42,9 @@ public class UserProfileActivity extends AppCompatActivity {
     private EditText fName;
     private EditText lName;
     private EditText address;
-    private TextView resetPass;
+    private TextView userEmail;
+    private String RegisteredUserID;
+
 
     // Reference to firestore database
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -54,6 +58,13 @@ public class UserProfileActivity extends AppCompatActivity {
         fName = findViewById(R.id.firstNameTextView);
         lName = findViewById(R.id.lastNameTextView);
         address = findViewById(R.id.addressTextView);
+        userEmail = findViewById(R.id.userProfileEmail);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String RegisteredUserEmail = currentUser.getEmail();
+        RegisteredUserID = currentUser.getUid();
+
+        userEmail.setText(RegisteredUserEmail);
 
     }
 
@@ -82,12 +93,13 @@ public class UserProfileActivity extends AppCompatActivity {
         myMap.put(KEY_FNAME,fname);
         myMap.put(KEY_LNAME,lname);
         myMap.put(KEY_ADDRESS, my_address);
+        myMap.put("role", "user");
 
         /*
          By geting rid of the document, Firestore will generate a new Id each time a
          new user is created.
         */
-        db.collection("users").document()
+        db.collection("users").document(RegisteredUserID)
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
