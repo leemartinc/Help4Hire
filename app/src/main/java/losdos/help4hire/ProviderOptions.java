@@ -36,6 +36,23 @@ public class ProviderOptions extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.provider_options, container, false);
 
+        Button addServiceBtn = myView.findViewById(R.id.goToAddService);
+        final android.support.v4.app.FragmentManager fm = getFragmentManager();
+
+        addServiceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fm.beginTransaction().replace(R.id.content_frame
+                        ,new AddService()).addToBackStack("provider_options")
+                        .commit();
+            }
+        });
+
+
+
+
+
+
         //get shared preferences
         prefs = getActivity().getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
 

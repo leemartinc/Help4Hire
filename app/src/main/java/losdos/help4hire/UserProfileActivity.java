@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
@@ -33,14 +35,16 @@ import java.util.Map;
 public class UserProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String KEY_FNAME = "First Name";
-    private static final String KEY_LNAME = "Last Name";
-    private static final String KEY_ADDRESS = "Address";
+    private static final String KEY_FNAME = "firstName";
+    private static final String KEY_LNAME = "lastName";
+    private static final String KEY_ADDRESS = "address";
 
     private EditText fName;
     private EditText lName;
     private EditText address;
-    private TextView resetPass;
+    private TextView userEmail;
+    private String RegisteredUserID;
+
 
     // Reference to firestore database
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -54,6 +58,13 @@ public class UserProfileActivity extends AppCompatActivity {
         fName = findViewById(R.id.firstNameTextView);
         lName = findViewById(R.id.lastNameTextView);
         address = findViewById(R.id.addressTextView);
+        userEmail = findViewById(R.id.userProfileEmail);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String RegisteredUserEmail = currentUser.getEmail();
+        RegisteredUserID = currentUser.getUid();
+
+        userEmail.setText(RegisteredUserEmail);
 
     }
 
@@ -65,6 +76,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     // This method will save into firestore
+
+    //set document id ?
     public void mySaveInfo(View view){
 
         String fname = fName.getText().toString();
@@ -80,12 +93,13 @@ public class UserProfileActivity extends AppCompatActivity {
         myMap.put(KEY_FNAME,fname);
         myMap.put(KEY_LNAME,lname);
         myMap.put(KEY_ADDRESS, my_address);
+        myMap.put("role", "user");
 
         /*
          By geting rid of the document, Firestore will generate a new Id each time a
          new user is created.
         */
-        db.collection("userDemo").document()
+        db.collection("users").document(RegisteredUserID)
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
