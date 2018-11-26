@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 showProviderItem();
             }
-        }, 1500);
+        }, 2000);
     }
 
 

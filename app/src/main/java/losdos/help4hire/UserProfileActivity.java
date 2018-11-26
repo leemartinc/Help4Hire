@@ -33,9 +33,9 @@ import java.util.Map;
 public class UserProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String KEY_FNAME = "First Name";
-    private static final String KEY_LNAME = "Last Name";
-    private static final String KEY_ADDRESS = "Address";
+    private static final String KEY_FNAME = "firstName";
+    private static final String KEY_LNAME = "lastName";
+    private static final String KEY_ADDRESS = "address";
 
     private EditText fName;
     private EditText lName;
@@ -65,6 +65,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     // This method will save into firestore
+
+    //set document id ?
     public void mySaveInfo(View view){
 
         String fname = fName.getText().toString();
@@ -85,7 +87,7 @@ public class UserProfileActivity extends AppCompatActivity {
          By geting rid of the document, Firestore will generate a new Id each time a
          new user is created.
         */
-        db.collection("userDemo").document()
+        db.collection("users").document()
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
