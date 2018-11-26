@@ -43,7 +43,6 @@ public static double lng;
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                     if (task.isSuccessful()) {
-//                        GeoPoint latlng;
                         DocumentSnapshot documentSnapshot = task.getResult();
 
 
@@ -71,6 +70,8 @@ public static double lng;
 
                 if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
+                    Log.d("help4hire5", String.valueOf(documentSnapshot));
+
 
                     serviceTitle = documentSnapshot.getString("serviceName");
 
@@ -110,38 +111,11 @@ public static double lng;
 
                     }else{ holder.textViewTotalCost.setText("ERROR");}
 
+
+
                     if(model.getProviderLocation() != null){
-                    CollectionReference requestsReference = firestore.collection("requests");
-//        requestsReference.document(model.getProviderLocation()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        requestsReference.document(String.valueOf(model.getProviderLocation())).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                GeoPoint latlng;
-
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot documentSnapshot = task.getResult();
-                                    System.out.println(documentSnapshot.getString("providerLocation"));
-//                                    Log.d("help4hire5", String.valueOf(documentSnapshot));
-//                                    latlng = documentSnapshot.getGeoPoint("providerLoation");
-//                                    Log.d("help4hire5", String.valueOf(documentSnapshot.getData()));
-//                                    if (latlng != null){
-//                                        Log.d("help4hire5", "LATLNG IS NOT NULL");
-//                                    } else {
-//                                        Log.d("help4hire5", "LATLNG IS NULLLLLLLL");
-//
-//                                    }
-                                } else{
-                                Log.d("help4hire", "TASK WAS NOT SUCCESSFUL");}
-                            }
-
-                        });
-
-
-
-
-                } else {
-            Log.d("help4hire", "GETLOCATION WAS NULLLLLLL");
+           lat = model.getProviderLocation().getLatitude();
+           lng = model.getProviderLocation().getLongitude();
                     }
                 }
 
@@ -179,9 +153,9 @@ public static double lng;
             @Override
             public void onClick(View view) {
 
-//                bundle.putAll("loc", loc);
                 bundle.putDouble("lat", lat);
                 bundle.putDouble("lng", lng);
+                bundle.putString("providerFullName", providerFullName);
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 MapsActivity mapsFrag = new MapsActivity();
                 mapsFrag.setArguments(bundle);
