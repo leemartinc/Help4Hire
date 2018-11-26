@@ -193,56 +193,6 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
                 });
     }
 
-
-
-    private void registerUser() {
-        String email = input_email.getText().toString().trim();
-        String password = input_password.getText().toString().trim();
-
-        if (email.isEmpty()) {
-            input_email.setError("Email is required");
-            input_email.requestFocus();
-            return;
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            input_email.setError("Please enter a valid email");
-            input_email.requestFocus();
-            return;
-        }
-
-        if (password.isEmpty()) {
-            input_password.setError("Password is required");
-            input_password.requestFocus();
-            return;
-        }
-
-        if (password.length() < 6) {
-            input_password.setError("Minimum lenght of password should be 6");
-            input_password.requestFocus();
-            return;
-        }
-
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    finish();
-                    startActivity(new Intent(OnboardingActivity.this, PreSignUp.class));
-                } else {
-
-                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                        Toast.makeText(getApplicationContext(), "You are already registered", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            }
-        });
-
-    }
     public void hideKeyboard(View view){
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
