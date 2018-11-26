@@ -81,8 +81,12 @@ public class UserProfileActivity extends AppCompatActivity {
         myMap.put(KEY_LNAME,lname);
         myMap.put(KEY_ADDRESS, my_address);
 
-
-        db.collection("userDemo").document("First User")
+        /*
+         By geting rid of the document, Firestore will generate a new Id each time a
+         new user is created. Upon removing that document, I began to get the error
+         `class R is public, should be declared in a file named R.java`
+        */
+        db.collection("userDemo").document()
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
