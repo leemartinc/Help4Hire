@@ -7,7 +7,7 @@ public class PreActiveServices {
     private String requestService;
     private String serviceStatus;
     private String totalCost;
-    private GeoPoint location;
+    private GeoPoint providerLocation;
 
 
 
@@ -15,12 +15,12 @@ public class PreActiveServices {
         //empty constructor needed
     }
 
-    public PreActiveServices(String requestProvider, String requestService, String serviceStatus, String totalCost, GeoPoint location){
+    public PreActiveServices(String requestProvider, String requestService, String serviceStatus, String totalCost, GeoPoint providerLocation){
         this.requestProvider = requestProvider;
         this.requestService = requestService;
         this.serviceStatus = serviceStatus;
         this.totalCost = totalCost;
-        this.location = location;
+        this.providerLocation = providerLocation;
     }
 
     public String getRequestProvider() {
@@ -39,7 +39,7 @@ public class PreActiveServices {
         return totalCost;
     }
 
-    public GeoPoint getLocation() {
-        return location;
+    public GeoPoint getProviderLocation() {
+        return providerLocation;
     }
 }
