@@ -30,7 +30,7 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
      */
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-    String requestDocID;
+    //String requestDocID;
     int pos;
 
 
@@ -39,13 +39,11 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final ProviderOptionsHolder holder, int position, @NonNull ProviderOptionsDB model) {
+    protected void onBindViewHolder(@NonNull final ProviderOptionsHolder holder, final int position, @NonNull ProviderOptionsDB model) {
 
         CollectionReference UserReference = firestore.collection("users");
 
-
         pos = position;
-
 
         if (model.getRequestUser() != null) {
             UserReference.document(model.getRequestUser()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -112,6 +110,85 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
             holder.textViewTotalCost.setText("Cost: $" + model.getTotalCost());
 
         }else{ holder.textViewTotalCost.setText("ERROR");}
+
+
+
+        //button magic
+        holder.endBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                String requestDocID = getSnapshots().getSnapshot(position).getId();
+
+                System.out.println(requestDocID);
+
+                Map<String,Object> myMap = new HashMap<String,Object>();
+                myMap.put("requestStatus","Closed");
+                myMap.put("serviceStatus", "Closed");
+
+                firestore.collection("requests").document(requestDocID).update(myMap);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new ProviderOptions())
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+
+        });
+
+        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                String requestDocID = getSnapshots().getSnapshot(position).getId();
+
+                System.out.println(requestDocID);
+
+                Map<String,Object> myMap = new HashMap<String,Object>();
+                myMap.put("requestStatus","Accepted");
+                myMap.put("serviceStatus", "Active");
+
+                firestore.collection("requests").document(requestDocID).update(myMap);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new ProviderOptions())
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+
+        });
+
+        holder.declineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                String requestDocID = getSnapshots().getSnapshot(position).getId();
+
+                System.out.println(requestDocID);
+
+                Map<String,Object> myMap = new HashMap<String,Object>();
+                myMap.put("requestStatus","Closed");
+                myMap.put("serviceStatus", "Closed");
+
+                firestore.collection("requests").document(requestDocID).update(myMap);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new ProviderOptions())
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+
+        });
+
+
+
+
     }
 
     @NonNull
@@ -122,9 +199,6 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
                 viewGroup, false);
 
         //final CollectionReference requestRef = firestore.collection("requests");
-
-        requestDocID = getSnapshots().getSnapshot(pos).getId();
-
 
         Button messageButton = v.findViewById(R.id.btnProviderMessage);
         messageButton.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +217,7 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
             }
         });
 
-
-
+/*
         Button endButton = v.findViewById(R.id.btnEnd);
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,9 +232,10 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
 
                 //firestore.collection("requests").document(requestDocID).update(myMap);
 
-
             }
         });
+
+        */
 
 
 
@@ -193,6 +267,9 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
             endBtn = itemView.findViewById(R.id.btnEnd);
             acceptBtn = itemView.findViewById(R.id.btnAccept);
             declineBtn = itemView.findViewById(R.id.btnDecline);
+
+
+
 
         }
     }
