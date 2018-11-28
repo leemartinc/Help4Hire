@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ProfileActivity extends Fragment {
+public class ProviderProfile extends Fragment {
 
         View myView;
 
@@ -22,7 +22,7 @@ public class ProfileActivity extends Fragment {
                 Log.d("help4hire5", "STRING FROM BUNDLE: " + fullName);
             Log.d("help4hire5", "STRING FROM BUNDLE: " + rating);
             Log.d("help4hire5", "STRING FROM BUNDLE: " + serviceDescription);
-        myView = inflater.inflate(R.layout.user_profile, container, false);
+        myView = inflater.inflate(R.layout.provider_profile, container, false);
         return myView;
     }
 

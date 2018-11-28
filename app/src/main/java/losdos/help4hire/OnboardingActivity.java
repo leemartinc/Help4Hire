@@ -87,12 +87,14 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
                 Snackbar snackbar = Snackbar.make(activity_onboard, "Enter your Email and Password",Snackbar.LENGTH_SHORT);
                 snackbar.show();
             }else {
+                showLoading();
                 String email = input_email.getText().toString().trim();
                 String password = input_password.getText().toString().trim();
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            hideLoading();
                             finish();
                             startActivity(new Intent(OnboardingActivity.this, PreSignUp.class));
                         } else {
@@ -123,6 +125,7 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void loginUser(final String email, final String password) {
+        showLoading();
         auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -130,10 +133,12 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
 
                         if(!task.isSuccessful())
                         {
+                            hideLoading();
                             Snackbar snackbar = Snackbar.make(activity_onboard, "Login Failed. Try again",Snackbar.LENGTH_SHORT);
                             snackbar.show();
                         }
                         else {
+
 
                             //check if user or provider
 
@@ -185,6 +190,7 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
                                 }
                             });
 
+                            hideLoading();
                             startActivity(new Intent(OnboardingActivity.this,MainActivity.class));
                         }
                     }
@@ -201,6 +207,13 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
     public void hideKeyboard(View view){
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+
+    public void showLoading(){
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+    }
+    public void hideLoading(){
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
     }
 
 

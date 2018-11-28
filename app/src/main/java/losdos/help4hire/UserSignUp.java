@@ -3,13 +3,9 @@ package losdos.help4hire;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +15,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +27,7 @@ import java.util.Map;
 
  */
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserSignUp extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final String KEY_FNAME = "firstName";
@@ -52,7 +47,7 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.user_signup);
 
 
         fName = findViewById(R.id.firstNameTextView);
@@ -70,7 +65,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(UserProfileActivity.this,PreSignUp.class));
+        startActivity(new Intent(UserSignUp.this,PreSignUp.class));
         finish();
     }
 
@@ -103,14 +98,14 @@ public class UserProfileActivity extends AppCompatActivity {
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(UserProfileActivity.this, "User Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserSignUp.this, "User Saved", Toast.LENGTH_SHORT).show();
                 // This should go to the home screen if the user is succesfully entered
-                startActivity(new Intent(UserProfileActivity.this,MainActivity.class));
+                startActivity(new Intent(UserSignUp.this,MainActivity.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UserProfileActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserSignUp.this, "Error!", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, e.toString());
             }
         });
@@ -120,7 +115,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private boolean isEmptyField (EditText editText){
         boolean result = editText.getText().toString().length() <= 0;
         if (result)
-            Toast.makeText(UserProfileActivity.this, "Fill all fields!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UserSignUp.this, "Fill all fields!", Toast.LENGTH_SHORT).show();
         return result;
     }
 

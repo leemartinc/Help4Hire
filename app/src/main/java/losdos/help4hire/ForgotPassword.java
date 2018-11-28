@@ -59,7 +59,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
 
         /*else if (view.getId() == R.id.signupButton){
 
-            startActivity(new Intent(OnboardingActivity.this,ProfileActivity.class));
+            startActivity(new Intent(OnboardingActivity.this,ProviderProfile.class));
             finish();
         }*/
 
