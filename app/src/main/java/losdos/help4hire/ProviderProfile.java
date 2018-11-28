@@ -42,6 +42,9 @@ public class ProviderProfile extends Fragment {
     String currentUserID;
     String providerUID;
     String name;
+    String serviceName;
+    String serviceRate;
+    String serviceDesc;
 
 
 
@@ -54,8 +57,14 @@ public class ProviderProfile extends Fragment {
                  String serviceDescription = bundle.getString("serviceDescription");
                  providerUID = bundle.getString("providerUID");
                  serviceDocID = bundle.getString("serviceDocID");
+                 serviceName = bundle.getString("serviceName");
+                serviceRate = bundle.getString("serviceRate");
+                serviceDesc = bundle.getString("serviceDescription");
 
-                Log.d("help4hire5", "STRING FROM BUNDLE: " + fullName);
+
+
+
+        Log.d("help4hire5", "STRING FROM BUNDLE: " + fullName);
             Log.d("help4hire5", "STRING FROM BUNDLE: " + rating);
             Log.d("help4hire5", "STRING FROM BUNDLE: " + serviceDescription);
             System.out.println(providerUID);
@@ -75,8 +84,34 @@ public class ProviderProfile extends Fragment {
             TextView serviceDescriptionField = myView.findViewById(R.id.ProviderServiceDescription);
             Button hireBtn = myView.findViewById(R.id.HireMeBtn);
 
+            serviceField.setText(serviceName);
+            rateField.setText(serviceRate);
+            serviceDescriptionField.setText(serviceDesc);
 
-            userRef.document(providerUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            /*
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        CollectionReference reference = firestore.collection("services");
+
+
+        reference.document(serviceDocID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                Bundle bundle = new Bundle();
+                bundle.putString("serviceDescription",documentSnapshot.getString("serviceDescription"));
+                bundle.putString("serviceRate",documentSnapshot.getString("serviceRate"));
+                bundle.putString("serviceName",documentSnapshot.getString("serviceName"));
+                ProviderProfile profileFrag = new ProviderProfile();
+                profileFrag.setArguments(bundle);
+
+            }
+        });
+        */
+
+
+
+        userRef.document(providerUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 

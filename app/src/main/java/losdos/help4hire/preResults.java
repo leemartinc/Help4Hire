@@ -4,15 +4,18 @@ public class preResults {
     private String serviceProvider;
     private String serviceRate;
     private String serviceDescription;
+    private String serviceName;
 
     public preResults(){
         //empty constructor needed
     }
 
-    public preResults(String serviceProvider, String serviceRate, String serviceDescription){
+    public preResults(String serviceProvider, String serviceRate, String serviceDescription, String serviceName){
         this.serviceRate = serviceRate;
         this.serviceProvider = serviceProvider;
         this.serviceDescription = serviceDescription;
+        this.serviceName = serviceName;
+
 
     }
 
@@ -25,4 +28,8 @@ public class preResults {
     }
 
     public String getServiceDescription(){ return serviceDescription;}
+
+    public String getServiceName() {
+        return serviceName;
+    }
 }

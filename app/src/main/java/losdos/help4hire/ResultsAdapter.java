@@ -24,13 +24,14 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     public static String serviceDescription;
     public String providerUID;
     public String serviceDocID;
+    //public String position;
 
     public ResultsAdapter(@NonNull FirestoreRecyclerOptions<preResults> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final ResultHolder holder, int position, @NonNull final preResults model) {
+    protected void onBindViewHolder(@NonNull final ResultHolder holder, final int position, @NonNull final preResults model) {
         //Bundle bundle = new Bundle();
 
         serviceDocID = getSnapshots().getSnapshot(position).getId();
@@ -91,6 +92,81 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
         holder.textViewAbbrevCost.setText(String.valueOf(model.getServiceRate()));
 
 
+        holder.resultsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                final AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                CollectionReference reference = firestore.collection("users");
+
+                reference.document(model.getServiceProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        Bundle bundle = new Bundle();
+
+
+                        String firstName = documentSnapshot.getString("firstName");
+                        String lastName = documentSnapshot.getString("lastName");
+
+                        String btnfullName = firstName + " " + lastName;
+
+                        bundle.putString("fullName", btnfullName);
+                        bundle.putInt("rating", documentSnapshot.getLong("rating").intValue());
+                        bundle.putString("providerUID", model.getServiceProvider());
+                        bundle.putString("serviceDocID", serviceDocID);
+                        bundle.putString("serviceDescription", model.getServiceDescription());
+                        bundle.putString("serviceRate", model.getServiceRate().toString());
+                        bundle.putString("serviceName", model.getServiceName());
+                        //System.out
+//                bundle.putDouble("lat", lat);
+//                bundle.putDouble("lng", lng);
+//                bundle.putString("providerFullName", providerFullName);
+                        ProviderProfile profileFrag = new ProviderProfile();
+                        profileFrag.setArguments(bundle);
+                        activity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_frame, profileFrag)
+                                .addToBackStack("nextFragment")
+                                .commit();
+
+
+                    }
+                });
+
+
+
+
+
+                String serviceDocID = getSnapshots().getSnapshot(position).getId();
+
+                System.out.println(serviceDocID);
+
+/*
+
+                bundle.putString("fullName", fullName);
+                bundle.putInt("rating", rating);
+                bundle.putString("providerUID", providerUID);
+                bundle.putString("serviceDocID", serviceDocID);
+                bundle.putString("serviceDescription", serviceDescription);
+                //System.out
+//                bundle.putDouble("lat", lat);
+//                bundle.putDouble("lng", lng);
+//                bundle.putString("providerFullName", providerFullName);
+                ProviderProfile profileFrag = new ProviderProfile();
+                profileFrag.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, profileFrag)
+                        .addToBackStack("nextFragment")
+                        .commit();
+
+                */
+            }
+        });
 
 
     }
@@ -98,10 +174,12 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     @NonNull
     @Override
     public ResultHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        final Bundle bundle = new Bundle();
+        //final Bundle bundle = new Bundle();
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_view_item,
                 viewGroup, false);
+
+        /*
         Button resultButton = v.findViewById(R.id.resultButton);
         resultButton.setOnClickListener(new View.OnClickListener() {
 
@@ -124,7 +202,7 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
                         .commit();
             }
         });
-
+*/
 
         return new ResultHolder(v);
     }
@@ -136,6 +214,8 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
         TextView textViewProviderRating;
         TextView textViewAbbrevCost;
 
+        Button resultsButton;
+
         public ResultHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -143,6 +223,9 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
             textViewProviderLoc = itemView.findViewById(R.id.resultItem2);
             textViewProviderRating = itemView.findViewById(R.id.resultItem3);
             textViewAbbrevCost = itemView.findViewById(R.id.resultItem4);
+
+            resultsButton = itemView.findViewById(R.id.resultButton);
+
 
 
         }

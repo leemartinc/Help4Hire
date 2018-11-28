@@ -121,7 +121,7 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
 
                 String requestDocID = getSnapshots().getSnapshot(position).getId();
 
-                System.out.println(requestDocID);
+                //System.out.println(requestDocID);
 
                 Map<String,Object> myMap = new HashMap<String,Object>();
                 myMap.put("requestStatus","Closed");
