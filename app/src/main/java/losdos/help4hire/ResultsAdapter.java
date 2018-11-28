@@ -23,6 +23,7 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     public static int rating;
     public static String serviceDescription;
     public String providerUID;
+    public String serviceDocID;
 
     public ResultsAdapter(@NonNull FirestoreRecyclerOptions<preResults> options) {
         super(options);
@@ -31,6 +32,9 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     @Override
     protected void onBindViewHolder(@NonNull final ResultHolder holder, int position, @NonNull final preResults model) {
         //Bundle bundle = new Bundle();
+
+        serviceDocID = getSnapshots().getSnapshot(position).getId();
+        //System.out.println(serviceDocID);
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference reference = firestore.collection("users");
@@ -106,6 +110,7 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
                 bundle.putString("fullName", fullName);
                 bundle.putInt("rating", rating);
                 bundle.putString("providerUID", providerUID);
+                bundle.putString("serviceDocID", serviceDocID);
 //                bundle.putDouble("lat", lat);
 //                bundle.putDouble("lng", lng);
 //                bundle.putString("providerFullName", providerFullName);
