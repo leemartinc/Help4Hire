@@ -11,10 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
@@ -32,13 +35,16 @@ import java.util.Map;
 public class UserProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String KEY_FNAME = "First Name";
-    private static final String KEY_LNAME = "Last Name";
-    private static final String KEY_ADDRESS = "Address";
+    private static final String KEY_FNAME = "firstName";
+    private static final String KEY_LNAME = "lastName";
+    private static final String KEY_ADDRESS = "address";
 
     private EditText fName;
     private EditText lName;
     private EditText address;
+    private TextView userEmail;
+    private String RegisteredUserID;
+
 
     // Reference to firestore database
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,39 +52,19 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profile);
+        setContentView(R.layout.activity_user_profile);
 
 
         fName = findViewById(R.id.firstNameTextView);
         lName = findViewById(R.id.lastNameTextView);
         address = findViewById(R.id.addressTextView);
+        userEmail = findViewById(R.id.userProfileEmail);
 
-        //no need for a toolbar here
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String RegisteredUserEmail = currentUser.getEmail();
+        RegisteredUserID = currentUser.getUid();
 
-        //also, add input for email address and password and send that through authentication
-        //using a method like the one below
-        /*
-        mAuth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUI(user);
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-                }
-
-                // ...
-            }
-        });
-         */
+        userEmail.setText(RegisteredUserEmail);
 
     }
 
@@ -90,6 +76,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     // This method will save into firestore
+
+    //set document id ?
     public void mySaveInfo(View view){
 
         String fname = fName.getText().toString();
@@ -105,9 +93,13 @@ public class UserProfileActivity extends AppCompatActivity {
         myMap.put(KEY_FNAME,fname);
         myMap.put(KEY_LNAME,lname);
         myMap.put(KEY_ADDRESS, my_address);
+        myMap.put("role", "user");
 
-
-        db.collection("userDemo").document("First User")
+        /*
+         By geting rid of the document, Firestore will generate a new Id each time a
+         new user is created.
+        */
+        db.collection("users").document(RegisteredUserID)
                 .set(myMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

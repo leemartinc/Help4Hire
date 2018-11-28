@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -25,6 +27,7 @@ public class ProviderOptions extends Fragment{
     RecyclerView recyclerView;
 
     SharedPreferences prefs;
+    String RegisteredUserID;
 
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private CollectionReference reference = firestore.collection("requests");
@@ -35,6 +38,29 @@ public class ProviderOptions extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.provider_options, container, false);
+
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String RegisteredUserEmail = currentUser.getEmail();
+
+        RegisteredUserID = currentUser.getUid();
+
+        Button addServiceBtn = myView.findViewById(R.id.goToAddService);
+        final android.support.v4.app.FragmentManager fm = getFragmentManager();
+
+        addServiceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fm.beginTransaction().replace(R.id.content_frame
+                        ,new AddService()).addToBackStack("provider_options")
+                        .commit();
+            }
+        });
+
+
+
+
+
 
         //get shared preferences
         prefs = getActivity().getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE);
@@ -49,7 +75,9 @@ public class ProviderOptions extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        q =  reference.orderBy("requestStatus");
+        q =  reference.orderBy("requestStatus")
+                //.whereEqualTo("requestProvider", RegisteredUserID)
+                    ;
 
         FirestoreRecyclerOptions<ProviderOptionsDB> options = new FirestoreRecyclerOptions.Builder<ProviderOptionsDB>()
                 .setQuery(q, ProviderOptionsDB.class)

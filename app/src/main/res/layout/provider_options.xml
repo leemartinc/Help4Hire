@@ -18,22 +18,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/goToAddService"
             android:layout_width="375dp"
             android:layout_height="47dp"
-            android:text="Add a service"
+            android:layout_gravity="center_horizontal"
             android:elevation="10dp"
             android:ems="10"
-            android:layout_gravity="center_horizontal"
             android:selectAllOnFocus="false"
+            android:text="Add a service"
+            android:background="@android:color/holo_green_light"
+            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintCircleRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.39"
-            />
+            app:layout_constraintVertical_bias="0.39" />
 
     </android.support.constraint.ConstraintLayout>
 

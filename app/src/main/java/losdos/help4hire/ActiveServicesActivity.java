@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -24,6 +26,7 @@ public class ActiveServicesActivity extends Fragment {
 
     View myView;
     RecyclerView recyclerView;
+    String RegisteredUserID;
 
     SharedPreferences prefs;
 
@@ -35,6 +38,11 @@ public class ActiveServicesActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String RegisteredUserEmail = currentUser.getEmail();
+
+        RegisteredUserID = currentUser.getUid();
 
         myView = inflater.inflate(R.layout.active_services, container, false);
 
@@ -52,7 +60,9 @@ public class ActiveServicesActivity extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        q =  reference.orderBy("serviceStatus");
+        q =  reference.orderBy("serviceStatus")
+                //.whereEqualTo("requestUser", RegisteredUserID)
+                    ;
 
 
         FirestoreRecyclerOptions<PreActiveServices> options = new FirestoreRecyclerOptions.Builder<PreActiveServices>()

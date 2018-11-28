@@ -40,4 +40,5 @@
         <item> Car Washer</item>
     </string-array>
     <string name="title_activity_maps">Map</string>
+    <string name="hire_me">Hire Me!</string>
 </resources>
