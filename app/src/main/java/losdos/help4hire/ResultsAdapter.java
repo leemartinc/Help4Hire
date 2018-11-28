@@ -2,10 +2,12 @@ package losdos.help4hire;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -18,14 +20,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, ResultsAdapter.ResultHolder> {
-
+    public static String fullName;
+    public static int rating;
+    public static String serviceDescription;
 
     public ResultsAdapter(@NonNull FirestoreRecyclerOptions<preResults> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final ResultHolder holder, int position, @NonNull preResults model) {
+    protected void onBindViewHolder(@NonNull final ResultHolder holder, int position, @NonNull final preResults model) {
         //Bundle bundle = new Bundle();
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -41,7 +45,7 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
                     String firstName = documentSnapshot.getString("firstName");
                     String lastName = documentSnapshot.getString("lastName");
 
-                    String fullName = firstName + " " + lastName;
+                    fullName = firstName + " " + lastName;
 
                     holder.textViewProviderName.setText(fullName);
 
@@ -49,11 +53,15 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
 
                     holder.textViewProviderLoc.setText(zip);
 
-                    int rating = documentSnapshot.getLong("rating").intValue();
+                    rating = documentSnapshot.getLong("rating").intValue();
 
                     holder.textViewProviderRating.setText(String.valueOf(rating));
 
-                }else{
+
+
+                }
+                if(model.getServiceDescription() != null){
+                    serviceDescription = model.getServiceDescription();
 
                 }
 
@@ -82,9 +90,30 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     @NonNull
     @Override
     public ResultHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        final Bundle bundle = new Bundle();
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_view_item,
                 viewGroup, false);
+        Button resultButton = v.findViewById(R.id.resultButton);
+        resultButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                bundle.putString("fullName", fullName);
+                bundle.putInt("rating", rating);
+//                bundle.putDouble("lat", lat);
+//                bundle.putDouble("lng", lng);
+//                bundle.putString("providerFullName", providerFullName);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                ProfileActivity profileFrag = new ProfileActivity();
+                profileFrag.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, profileFrag)
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+        });
 
 
         return new ResultHolder(v);
@@ -104,9 +133,6 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
             textViewProviderLoc = itemView.findViewById(R.id.resultItem2);
             textViewProviderRating = itemView.findViewById(R.id.resultItem3);
             textViewAbbrevCost = itemView.findViewById(R.id.resultItem4);
-
-
-
 
 
         }
