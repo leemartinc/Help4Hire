@@ -193,6 +193,11 @@ public class OnboardingActivity extends AppCompatActivity implements View.OnClic
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
     public void hideKeyboard(View view){
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
