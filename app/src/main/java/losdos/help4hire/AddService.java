@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,6 +44,7 @@ public class AddService extends Fragment {
     private RadioGroup daGroup2;
     private Button save;
     private String service;
+    private EditText desc;
 
     private static final String TAG = "MainActivity";
     private static final String KEY_FNAME = "firstName";
@@ -66,6 +69,9 @@ public class AddService extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.add_service, container, false);
 
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
         ageEditText = myView.findViewById(R.id.ageEditText);
         dollarEditText = myView.findViewById(R.id.dollarEditText);
 
@@ -78,6 +84,8 @@ public class AddService extends Fragment {
         daGroup = myView.findViewById(R.id.myRadioGroup);
         daGroup2 = myView.findViewById(R.id.hourlyFixedRadioGroup);
 
+        desc = myView.findViewById((R.id.service_description));
+
         save = myView.findViewById(R.id.btnAddService);
 
 
@@ -85,7 +93,7 @@ public class AddService extends Fragment {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         RegisteredUserID = currentUser.getUid();
 
-        String[] services = new String[]{"Baby Sitter", "Main", "Dog Walker", "Plumber", "mechanic"};
+        //String[] services = new String[]{"Baby Sitter", "Main", "Dog Walker", "Plumber", "mechanic"};
 
         Spinner spinner = myView.findViewById(R.id.mySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -121,13 +129,14 @@ public class AddService extends Fragment {
                 String dollar = dollarEditText.getText().toString();
                 String yes_button = yesButton.getText().toString();
                 String no_button = noButton.getText().toString();
+                String serviceDesc = desc.getText().toString();
 
 
                 final Map<String,Object> myMap = new HashMap<String,Object>();
                 myMap.put("serviceName",service);
                 myMap.put("serviceRate", dollar);
                 myMap.put("serviceProvider" , RegisteredUserID);
-                myMap.put("serviceDescription", "");
+                myMap.put("serviceDescription", serviceDesc);
 
                 if(daGroup2.getCheckedRadioButtonId() == R.id.hourlyRadioButton){
                     myMap.put(KEY_HOURLY, true);
