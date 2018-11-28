@@ -1,5 +1,6 @@
 package losdos.help4hire;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOptionsDB, ProviderOptionsAdapter.ProviderOptionsHolder> {
 
@@ -24,15 +28,23 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
      *
      * @param options
      */
+
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    //String requestDocID;
+    int pos;
+
+
     public ProviderOptionsAdapter(@NonNull FirestoreRecyclerOptions<ProviderOptionsDB> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final ProviderOptionsHolder holder, int position, @NonNull ProviderOptionsDB model) {
+    protected void onBindViewHolder(@NonNull final ProviderOptionsHolder holder, final int position, @NonNull ProviderOptionsDB model) {
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference UserReference = firestore.collection("users");
+
+        pos = position;
+
         if (model.getRequestUser() != null) {
             UserReference.document(model.getRequestUser()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -98,6 +110,85 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
             holder.textViewTotalCost.setText("Cost: $" + model.getTotalCost());
 
         }else{ holder.textViewTotalCost.setText("ERROR");}
+
+
+
+        //button magic
+        holder.endBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                String requestDocID = getSnapshots().getSnapshot(position).getId();
+
+                System.out.println(requestDocID);
+
+                Map<String,Object> myMap = new HashMap<String,Object>();
+                myMap.put("requestStatus","Closed");
+                myMap.put("serviceStatus", "Closed");
+
+                firestore.collection("requests").document(requestDocID).update(myMap);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new ProviderOptions())
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+
+        });
+
+        holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                String requestDocID = getSnapshots().getSnapshot(position).getId();
+
+                System.out.println(requestDocID);
+
+                Map<String,Object> myMap = new HashMap<String,Object>();
+                myMap.put("requestStatus","Accepted");
+                myMap.put("serviceStatus", "Active");
+
+                firestore.collection("requests").document(requestDocID).update(myMap);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new ProviderOptions())
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+
+        });
+
+        holder.declineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                String requestDocID = getSnapshots().getSnapshot(position).getId();
+
+                System.out.println(requestDocID);
+
+                Map<String,Object> myMap = new HashMap<String,Object>();
+                myMap.put("requestStatus","Closed");
+                myMap.put("serviceStatus", "Closed");
+
+                firestore.collection("requests").document(requestDocID).update(myMap);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, new ProviderOptions())
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+
+        });
+
+
+
+
     }
 
     @NonNull
@@ -106,6 +197,46 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.provider_options_item,
                 viewGroup, false);
+
+        //final CollectionReference requestRef = firestore.collection("requests");
+
+        Button messageButton = v.findViewById(R.id.btnProviderMessage);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Messages messagesFrag = new Messages();
+                //messagesFrag.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, messagesFrag)
+                        .addToBackStack("nextFragment")
+                        .commit();
+            }
+        });
+
+/*
+        Button endButton = v.findViewById(R.id.btnEnd);
+        endButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                System.out.println(requestDocID);
+
+                Map<String,Object> myMap = new HashMap<String,Object>();
+                myMap.put("requestStatus","Closed");
+                myMap.put("serviceStatus", "Closed");
+
+                //firestore.collection("requests").document(requestDocID).update(myMap);
+
+            }
+        });
+
+        */
+
 
 
         return new ProviderOptionsHolder(v);
@@ -136,6 +267,10 @@ public class ProviderOptionsAdapter extends FirestoreRecyclerAdapter<ProviderOpt
             endBtn = itemView.findViewById(R.id.btnEnd);
             acceptBtn = itemView.findViewById(R.id.btnAccept);
             declineBtn = itemView.findViewById(R.id.btnDecline);
+
+
+
+
         }
     }
 }
