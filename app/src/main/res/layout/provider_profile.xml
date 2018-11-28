@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:layout_marginTop="88dp">
 
     <Button
         android:id="@+id/HireMeBtn"
@@ -19,9 +20,10 @@
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.376" />
+        app:layout_constraintVertical_bias="0.498" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -91,7 +93,7 @@
         app:layout_constraintVertical_bias="0.151" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/ProviderRatingBar"
         style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
         android:layout_width="179dp"
         android:layout_height="41dp"
@@ -108,8 +110,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.231" />
 
-    <EditText
-        android:id="@+id/ProviderDescription"
+    <TextView
+        android:id="@+id/ProviderServiceDescription"
         android:layout_width="375dp"
         android:layout_height="107dp"
         android:layout_marginStart="8dp"
@@ -118,11 +120,13 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textMultiLine"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.579" />
+        app:layout_constraintVertical_bias="0.82"
+        tools:text="this is a short description of the service being provided...as well as other relevant information" />
 
 </android.support.constraint.ConstraintLayout>

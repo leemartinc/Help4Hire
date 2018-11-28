@@ -37,6 +37,7 @@ public static double lng;
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference UserReference = firestore.collection("users");
+
         if (model.getRequestProvider() != null) {
             UserReference.document(model.getRequestProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -70,8 +71,6 @@ public static double lng;
 
                 if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    Log.d("help4hire5", String.valueOf(documentSnapshot));
-
 
                     serviceTitle = documentSnapshot.getString("serviceName");
 
