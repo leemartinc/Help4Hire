@@ -22,6 +22,7 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
     public static String fullName;
     public static int rating;
     public static String serviceDescription;
+    public String providerUID;
 
     public ResultsAdapter(@NonNull FirestoreRecyclerOptions<preResults> options) {
         super(options);
@@ -33,6 +34,8 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         CollectionReference reference = firestore.collection("users");
+
+        providerUID = model.getServiceProvider();
 
         reference.document(model.getServiceProvider()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -55,6 +58,8 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
                     rating = documentSnapshot.getLong("rating").intValue();
 
                     holder.textViewProviderRating.setText(String.valueOf(rating));
+
+
 
 
 
@@ -100,6 +105,7 @@ public class ResultsAdapter extends FirestoreRecyclerAdapter<preResults, Results
             public void onClick(View view) {
                 bundle.putString("fullName", fullName);
                 bundle.putInt("rating", rating);
+                bundle.putString("providerUID", providerUID);
 //                bundle.putDouble("lat", lat);
 //                bundle.putDouble("lng", lng);
 //                bundle.putString("providerFullName", providerFullName);
