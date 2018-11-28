@@ -43,5 +43,16 @@
         app:layout_constraintTop_toTopOf="@+id/searchQuery"
         app:srcCompat="@drawable/go_arrow" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="What service are you looking for?"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/searchQuery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
