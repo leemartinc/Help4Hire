@@ -1,6 +1,8 @@
 package losdos.help4hire;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -45,6 +47,8 @@ public class ProviderSignUp extends AppCompatActivity {
     private String RegisteredUserID;
     private TextView userEmail;
 
+    SharedPreferences.Editor editor;
+
 
     // Reference to firestore database
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -54,7 +58,6 @@ public class ProviderSignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_signup);
-
 
 
         // FireStore Storage for Provider
@@ -67,6 +70,12 @@ public class ProviderSignUp extends AppCompatActivity {
         String RegisteredUserEmail = currentUser.getEmail();
 
         RegisteredUserID = currentUser.getUid();
+
+        editor = getSharedPreferences("PREFERENCE",Context.MODE_PRIVATE).edit();
+        editor.putString("CURRENT_USER_UID", RegisteredUserID);
+        editor.apply();
+        editor.putString("role", "provider");
+        editor.apply();
 
         userEmail = findViewById(R.id.providerProfileEmail);
         userEmail.setText(RegisteredUserEmail);
