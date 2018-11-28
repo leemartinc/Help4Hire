@@ -35,7 +35,7 @@
 
         <!--
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ProviderProfile"
             android:label="@string/title_activity_profile"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -58,7 +58,7 @@
         <activity android:name=".OnboardingActivity" />
         <activity android:name=".PreSignUp" />
         <activity android:name=".ProviderSignUp" />
-        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".UserSignUp" />
         <!-- <activity android:name=".ReviewActivity" /> -->
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

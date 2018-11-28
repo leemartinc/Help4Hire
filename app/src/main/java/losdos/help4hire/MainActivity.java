@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 showProviderItem();
             }
-        }, 1500);
+        }, 2000);
     }
 
 
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
         }
     }
 
@@ -157,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_profile) {
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame
-                            , new ProfileActivity()).addToBackStack(null)
+                            , new UserProfile()).addToBackStack(null)
                     .commit();
 
         } else if (id == R.id.nav_active_services) {
@@ -189,5 +188,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
+
 
 }

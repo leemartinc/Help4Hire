@@ -34,10 +34,16 @@
 
     <!--This Array Below is for the Spinner in the Provider Sign Up-->
     <string-array name="provider_choices">
-        <item> Dog Walker</item>
-        <item> Maid</item>
-        <item> Baby Sitter</item>
-        <item> Car Washer</item>
+        <item>dog walker</item>
+        <item>maid</item>
+        <item>baby sitter</item>
+        <item>car washer</item>
+        <item>plumber</item>
+        <item>mechanic</item>
+        <item>dog sitter</item>
+        <item>computer repair</item>
+
     </string-array>
     <string name="title_activity_maps">Map</string>
+    <string name="hire_me">Hire Me!</string>
 </resources>
