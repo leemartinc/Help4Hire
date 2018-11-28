@@ -20,7 +20,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_messages, viewGroup, false);
+        View view = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.sent_messages, viewGroup, false);
         return new ViewHolder(view);
     }
 
