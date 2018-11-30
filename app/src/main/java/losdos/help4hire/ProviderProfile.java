@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
@@ -125,8 +126,10 @@ public class ProviderProfile extends Fragment {
                 }
             });
 
+        //location: new firebase.firestore.GeoPoint(latitude, longitude);
 
-                    final Map<String,Object> myMap = new HashMap<String,Object>();
+
+        final Map<String,Object> myMap = new HashMap<String,Object>();
                     //providerlcation
                     myMap.put("requestDate",new Date());
                     myMap.put("requestProvider",providerUID);
@@ -136,6 +139,8 @@ public class ProviderProfile extends Fragment {
                     myMap.put("serviceStatus","Pending");
                     myMap.put("totalCost","200");
                     myMap.put("totalHours","5");
+                    myMap.put("providerLocation", new GeoPoint(33.74855,-84.391502));
+
 
 
 

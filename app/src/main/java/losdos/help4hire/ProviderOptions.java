@@ -75,8 +75,8 @@ public class ProviderOptions extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        q =  reference.orderBy("requestStatus")
-                //.whereEqualTo("requestProvider", RegisteredUserID)
+        q =  reference
+                .whereEqualTo("requestProvider", RegisteredUserID)
                     ;
 
         FirestoreRecyclerOptions<ProviderOptionsDB> options = new FirestoreRecyclerOptions.Builder<ProviderOptionsDB>()

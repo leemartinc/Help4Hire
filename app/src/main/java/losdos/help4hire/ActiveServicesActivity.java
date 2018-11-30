@@ -60,8 +60,8 @@ public class ActiveServicesActivity extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        q =  reference.orderBy("serviceStatus")
-                //.whereEqualTo("requestUser", RegisteredUserID)
+        q =  reference
+                .whereEqualTo("requestUser", RegisteredUserID)
                     ;
 
 
